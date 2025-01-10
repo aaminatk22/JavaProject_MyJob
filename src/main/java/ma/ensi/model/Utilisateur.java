@@ -8,9 +8,7 @@ public class Utilisateur {
     private String role;
     private String nom;
     private String prenom;
-    private int age;
-    private String entreprise;
-    private String nomUniversite;
+
 
     // Getters et Setters
     public int getIdUtilisateur() {
@@ -67,30 +65,6 @@ public class Utilisateur {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEntreprise() {
-        return entreprise;
-    }
-
-    public void setEntreprise(String entreprise) {
-        this.entreprise = entreprise;
-    }
-
-    public String getNomUniversite() {
-        return nomUniversite;
-    }
-
-    public void setNomUniversite(String nomUniversite) {
-        this.nomUniversite = nomUniversite;
     }
 
     public void setPassword(String password) { this.motDePasse = password; }
