@@ -1,6 +1,8 @@
 package ma.ensi.controller;
 
+import ma.ensi.model.Annonce;
 import ma.ensi.model.Utilisateur;
+import ma.ensi.service.AnnonceService;
 import ma.ensi.service.UtilisateurService;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Contrôleur pour gérer les processus de connexion et d'inscription des utilisateurs.
@@ -43,6 +46,9 @@ public class UtilisateurController extends HttpServlet {
 
             // Connexion réussie : stocker l'utilisateur en session
             request.getSession().setAttribute("utilisateur", utilisateur);
+            AnnonceService annonceService = new AnnonceService();
+            List<Annonce> annonces = annonceService.getAllAnnonces();
+            request.getSession().setAttribute("annonces",annonces );
             response.sendRedirect("views/candidat/annonces.jsp"); // Page après connexion réussie
         } catch (Exception e) {
             // Connexion échouée : afficher un message d'erreur

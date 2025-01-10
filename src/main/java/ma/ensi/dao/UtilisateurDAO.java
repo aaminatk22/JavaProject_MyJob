@@ -1,5 +1,6 @@
 package ma.ensi.dao;
 
+import ma.ensi.model.Candidat;
 import ma.ensi.model.Utilisateur;
 
 import java.sql.Connection;
@@ -23,9 +24,9 @@ public class UtilisateurDAO {
             ps.setString(4, utilisateur.getRole());
             ps.setString(5, utilisateur.getNom());
             ps.setString(6, utilisateur.getPrenom());
-            ps.setInt(7, utilisateur.getAge());
-            ps.setString(8, utilisateur.getEntreprise());
-            ps.setString(9, utilisateur.getNomUniversite());
+            ps.setInt(7, Candidat.getAge());
+            ps.setString(8, Recruteur.getEntreprise());
+            ps.setString(9, Candidat.getNomUniversite());
 
             System.out.println("Executing query: " + ps.toString());
             ps.executeUpdate();
@@ -92,9 +93,9 @@ public class UtilisateurDAO {
         utilisateur.setRole(rs.getString("role"));
         utilisateur.setNom(rs.getString("nom"));
         utilisateur.setPrenom(rs.getString("prenom"));
-        utilisateur.setAge(rs.getInt("age"));
-        utilisateur.setEntreprise(rs.getString("entreprise"));
-        utilisateur.setNomUniversite(rs.getString("nom_universite"));
+        Candidat.setAge(rs.getInt("age"));
+        Recruteur.setEntreprise(rs.getString("entreprise"));
+        Candidat.setNomUniversite(rs.getString("nom_universite"));
         return utilisateur;
     }
 }
