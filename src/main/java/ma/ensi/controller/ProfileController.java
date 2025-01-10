@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
 
 @WebServlet("/profile")
@@ -33,36 +34,52 @@ public class ProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Step 1: Retrieve candidate ID and form data
+            // Log the start of the request
+            System.out.println("Starting profile creation");
+
+            // Retrieve user and parameters
             Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
             if (utilisateur == null || !utilisateur.getRole().equals("candidat")) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied.");
                 return;
             }
             int idUtilisateur = utilisateur.getIdUtilisateur();
+            System.out.println("User ID: " + idUtilisateur);
 
+            // Validate parameters
             String description = request.getParameter("description");
-            String competence1 = request.getParameter("competence1");
-            String competence2 = request.getParameter("competence2");
-            String projet1 = request.getParameter("projet1");
-            String projetDescription1 = request.getParameter("projetDescription1");
-            String experience1 = request.getParameter("experience1");
-            String entreprise1 = request.getParameter("entreprise1");
+            if (description == null || description.trim().isEmpty()) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Description is required.");
+                return;
+            }
+            System.out.println("Description: " + description);
 
-            // Step 2: Handle file upload
+            // Handle file upload
             Part resumePart = request.getPart("resume");
+            if (resumePart == null || resumePart.getSize() == 0) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Resume file is required.");
+                return;
+            }
+
             String fileName = resumePart.getSubmittedFileName();
             String uploadPath = getServletContext().getRealPath("") + "/uploads/";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
             String filePath = uploadPath + fileName;
+            System.out.println("File path: " + filePath);
             resumePart.write(filePath);
 
-            // Step 3: Create the portfolio and related entities
+            // Call service to save profile
             Portfolio portfolio = profileService.createProfile(
-                    idUtilisateur, description, competence1, competence2, projet1, projetDescription1,
-                    experience1, entreprise1, filePath
+                    idUtilisateur, description, request.getParameter("competence1"),
+                    request.getParameter("competence2"), request.getParameter("projet1"),
+                    request.getParameter("projetDescription1"), request.getParameter("experience1"),
+                    request.getParameter("entreprise1"), filePath
             );
 
-            // Step 4: Redirect to profile view page
+            // Handle response
             if (portfolio != null) {
                 response.sendRedirect(request.getContextPath() + "/views/candidat/CreerProfil.jsp");
             } else {
@@ -70,8 +87,9 @@ public class ProfileController extends HttpServlet {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Log the exception
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing profile.");
         }
     }
+
 }

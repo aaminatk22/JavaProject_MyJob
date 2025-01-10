@@ -11,7 +11,7 @@ public class PortfolioDAO {
 
         try (Connection conn = ConnexionBDD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, portfolio.getIdUser());
+            stmt.setInt(1, portfolio.getIdUtilisateur());
             stmt.setString(2, portfolio.getDescription());
 
             ResultSet rs = stmt.executeQuery();

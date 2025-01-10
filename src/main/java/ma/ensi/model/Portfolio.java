@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Portfolio {
     private int idPortfolio; // Identifiant unique du portfolio
-    private int idUser; // Référence à l'utilisateur (id_utilisateur dans la table utilisateur)
+    private int idUtilisateur; // Référence à l'utilisateur (id_utilisateur dans la table utilisateur)
     private String description; // Description du portfolio
     private List<Competence> competences; // Liste des compétences associées
     private List<Projet> projets; // Liste des projets associés
@@ -16,7 +16,7 @@ public class Portfolio {
     // Constructeur avec paramètres
     public Portfolio(int idPortfolio, int idUser, String description, List<Competence> competences, List<Projet> projets, List<Experience> experiences) {
         this.idPortfolio = idPortfolio;
-        this.idUser = idUser;
+        this.idUtilisateur = idUser;
         this.description = description;
         this.competences = competences;
         this.projets = projets;
@@ -32,12 +32,12 @@ public class Portfolio {
         this.idPortfolio = idPortfolio;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getIdUtilisateur() {
+        return idUtilisateur;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdUtilisateur(int idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
     }
 
     public String getDescription() {
