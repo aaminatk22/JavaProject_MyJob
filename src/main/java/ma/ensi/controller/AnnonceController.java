@@ -21,13 +21,12 @@ public class AnnonceController extends HttpServlet {
         List<Annonce> annonces = annonceService.getAllAnnonces();
 
         if (annonces != null) {
-            // Store annonces in the session to pass to JSP
+
             request.getSession().setAttribute("annonces", annonces);
 
-            // Redirect to JSP
             response.sendRedirect(request.getContextPath() + "/views/candidat/annonces.jsp");
         } else {
-            // Log error or handle case when no annonces are retrieved
+
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve annonces.");
         }
     }

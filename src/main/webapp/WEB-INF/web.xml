@@ -10,23 +10,8 @@
 
   <!-- Welcome File -->
   <welcome-file-list>
-    <welcome-file>views/login/loginpage.jsp</welcome-file>
+    <welcome-file>views/candidat/CreerProfil.jsp</welcome-file>
   </welcome-file-list>
 
-  <!-- Servlet for UtilisateurController -->
-  <servlet>
-    <servlet-name>UtilisateurController</servlet-name>
-    <servlet-class>ma.ensi.controller.UtilisateurController</servlet-class>
-  </servlet>
-
-  <!-- Servlet Mappings for UtilisateurController -->
-  <servlet-mapping>
-    <servlet-name>UtilisateurController</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>UtilisateurController</servlet-name>
-    <url-pattern>/register</url-pattern>
-  </servlet-mapping>
 
 </web-app>
