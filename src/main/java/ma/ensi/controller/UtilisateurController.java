@@ -49,7 +49,7 @@ public class UtilisateurController extends HttpServlet {
             AnnonceService annonceService = new AnnonceService();
             List<Annonce> annonces = annonceService.getAllAnnonces();
             request.getSession().setAttribute("annonces",annonces );
-            response.sendRedirect("views/candidat/annonces.jsp"); // Page après connexion réussie
+            response.sendRedirect("views/candidat/CreerProfil.jsp"); // Page après connexion réussie
         } catch (Exception e) {
             // Connexion échouée : afficher un message d'erreur
             request.setAttribute("error", "Email ou mot de passe incorrect !");

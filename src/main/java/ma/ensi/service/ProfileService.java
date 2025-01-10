@@ -14,55 +14,29 @@ public class ProfileService {
                                    String projet1, String projetDescription1, String experience1, String entreprise1,
                                    String resumePath) {
         try {
-            // Create the portfolio
+            System.out.println("Creating profile for user ID: " + idUtilisateur);
+
+            // Step 1: Create the portfolio and link it to the user
             Portfolio portfolio = new Portfolio();
-            portfolio.setIdUser(idUtilisateur);
+            portfolio.setIdUtilisateur(idUtilisateur);
             portfolio.setDescription(description);
+
             int portfolioId = portfolioDAO.savePortfolio(portfolio);
+            System.out.println("Portfolio saved with ID: " + portfolioId);
 
-            // Add competencies
-            if (competence1 != null && !competence1.isEmpty()) {
-                Competence c1 = new Competence();
-                c1.setIdPortfolio(portfolioId);
-                c1.setNom(competence1);
-                competenceDAO.saveCompetence(c1);
-            }
-            if (competence2 != null && !competence2.isEmpty()) {
-                Competence c2 = new Competence();
-                c2.setIdPortfolio(portfolioId);
-                c2.setNom(competence2);
-                competenceDAO.saveCompetence(c2);
-            }
-
-            // Add projects
-            if (projet1 != null && !projet1.isEmpty()) {
-                Projet projet = new Projet();
-                projet.setIdPortfolio(portfolioId);
-                projet.setTitre(projet1);
-                projet.setDescription(projetDescription1);
-                projetDAO.saveProjet(projet);
-            }
-
-            // Add experiences
-            if (experience1 != null && !experience1.isEmpty()) {
-                Experience experience = new Experience();
-                experience.setIdPortfolio(portfolioId);
-                experience.setTitre(experience1);
-                experience.setEntreprise(entreprise1);
-                experienceDAO.saveExperience(experience);
-            }
-
-            // Add document (resume)
+            // Step 2: Save the document (resume) linked to the portfolio
             Document resume = new Document();
-            resume.setIdUtilisateur(idUtilisateur);
+            resume.setIdPortfolio(portfolioId); // Link to the portfolio
             resume.setType("Resume");
             resume.setFilePath(resumePath);
             documentDAO.saveDocument(resume);
 
             return portfolio;
         } catch (Exception e) {
+            System.err.println("Error in createProfile: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
     }
+
 }

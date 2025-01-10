@@ -3,22 +3,34 @@ package ma.ensi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recruteur {
-    private String entreprise; // Nom de l'entreprise
-    private String poste;      // Poste occupé dans l'entreprise
-    private List<Annonce> annonces = new ArrayList<>(); // Liste des annonces publiées
+public class Recruteur extends Utilisateur {
+    private String entreprise; // Name of the company
+    private String poste;      // Position within the company
+    private List<Annonce> annonces = new ArrayList<>(); // List of job postings
 
-    // Default constructor
-    public Recruteur() {}
+    // Default Constructor
+    public Recruteur() {
+        super(); // Calls the default constructor of Utilisateur
+    }
 
-    // Parameterized constructor
-    public Recruteur(String entreprise, String poste, List<Annonce> annonces) {
+    // Parameterized Constructor
+    public Recruteur(int idUtilisateur, String nomUtilisateur, String email, String motDePasse, String role,
+                     String nom, String prenom, String entreprise, String poste, List<Annonce> annonces) {
+        super(); // Calls the parent (Utilisateur) constructor
+        this.setIdUtilisateur(idUtilisateur);
+        this.setNomUtilisateur(nomUtilisateur);
+        this.setEmail(email);
+        this.setMotDePasse(motDePasse);
+        this.setRole(role);
+        this.setNom(nom);
+        this.setPrenom(prenom);
+
         this.entreprise = entreprise;
         this.poste = poste;
         this.annonces = (annonces != null) ? annonces : new ArrayList<>();
     }
 
-    // Getters et Setters
+    // Getters and Setters
     public String getEntreprise() {
         return entreprise;
     }

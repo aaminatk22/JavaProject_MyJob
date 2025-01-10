@@ -9,15 +9,17 @@ import java.sql.SQLException;
 public class DocumentDAO {
 
     public void saveDocument(Document document) throws SQLException {
-        String sql = "INSERT INTO document (id_utilisateur, type, file_path) VALUES (?, ?, ?)";
+        String query = "INSERT INTO document (id_portfolio, type, file_path) VALUES (?, ?, ?)";
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
 
-        try (Connection conn = ConnexionBDD.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, document.getIdUser());
-            stmt.setString(2, document.getType());
-            stmt.setString(3, document.getFilePath());
+            ps.setInt(1, document.getIdPortfolio()); // Link the document to a portfolio
+            ps.setString(2, document.getType());
+            ps.setString(3, document.getFilePath());
 
-            stmt.executeUpdate();
+            ps.executeUpdate();
+            System.out.println("Document saved successfully.");
         }
     }
+
 }

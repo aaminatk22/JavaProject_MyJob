@@ -1,6 +1,7 @@
 package ma.ensi.dao;
 
 import ma.ensi.model.Candidat;
+import ma.ensi.model.Recruteur;
 import ma.ensi.model.Utilisateur;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 
 public class UtilisateurDAO {
 
-    // Enregistrer un nouvel utilisateur
+    // Save a new utilisateur
     public void saveUtilisateur(Utilisateur utilisateur) throws SQLException {
         String query = "INSERT INTO utilisateur (nom_utilisateur, email, mot_de_passe, role, nom, prenom, age, entreprise, nom_universite) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -24,9 +25,27 @@ public class UtilisateurDAO {
             ps.setString(4, utilisateur.getRole());
             ps.setString(5, utilisateur.getNom());
             ps.setString(6, utilisateur.getPrenom());
-            ps.setInt(7, Candidat.getAge());
-            ps.setString(8, Recruteur.getEntreprise());
-            ps.setString(9, Candidat.getNomUniversite());
+
+            // Check if the user is a Candidat
+            if (utilisateur instanceof Candidat) {
+                Candidat candidat = (Candidat) utilisateur;
+                ps.setInt(7, candidat.getAge()); // Age is specific to Candidat
+                ps.setNull(8, java.sql.Types.VARCHAR); // Entreprise is not applicable for Candidat
+                ps.setString(9, candidat.getNomUniversite()); // Nom Universite is specific to Candidat
+            }
+            // Check if the user is a Recruteur
+            else if (utilisateur instanceof Recruteur) {
+                Recruteur recruteur = (Recruteur) utilisateur;
+                ps.setNull(7, java.sql.Types.INTEGER); // Age is not applicable for Recruteur
+                ps.setString(8, recruteur.getEntreprise()); // Entreprise is specific to Recruteur
+                ps.setNull(9, java.sql.Types.VARCHAR); // Nom Universite is not applicable for Recruteur
+            }
+            // Default case for other roles
+            else {
+                ps.setNull(7, java.sql.Types.INTEGER); // Age is null
+                ps.setNull(8, java.sql.Types.VARCHAR); // Entreprise is null
+                ps.setNull(9, java.sql.Types.VARCHAR); // Nom Universite is null
+            }
 
             System.out.println("Executing query: " + ps.toString());
             ps.executeUpdate();
@@ -35,7 +54,7 @@ public class UtilisateurDAO {
     }
 
 
-    // Vérifier si un email existe
+    // Check if an email exists
     public boolean emailExists(String email) throws SQLException {
         String query = "SELECT COUNT(*) FROM utilisateur WHERE email = ?";
         try (Connection connection = ConnexionBDD.getConnection();
@@ -51,7 +70,7 @@ public class UtilisateurDAO {
         return false;
     }
 
-    // Trouver un utilisateur par email
+    // Find a user by email
     public Utilisateur findByEmail(String email) throws SQLException {
         String query = "SELECT * FROM utilisateur WHERE email = ?";
         try (Connection connection = ConnexionBDD.getConnection();
@@ -67,7 +86,7 @@ public class UtilisateurDAO {
         return null;
     }
 
-    // Trouver un utilisateur par ID
+    // Find a user by ID
     public Utilisateur findById(int idUtilisateur) throws SQLException {
         String query = "SELECT * FROM utilisateur WHERE id_utilisateur = ?";
         try (Connection connection = ConnexionBDD.getConnection();
@@ -83,19 +102,34 @@ public class UtilisateurDAO {
         return null;
     }
 
-    // Mapper un utilisateur à partir d'un ResultSet
+    // Map a user from ResultSet
     private Utilisateur mapUtilisateur(ResultSet rs) throws SQLException {
-        Utilisateur utilisateur = new Utilisateur();
+        // Determine the role and create the appropriate object
+        String role = rs.getString("role");
+        Utilisateur utilisateur;
+
+        if ("candidat".equals(role)) {
+            Candidat candidat = new Candidat();
+            candidat.setAge(rs.getInt("age")); // Age
+            candidat.setNomUniversite(rs.getString("nom_universite")); // Nom Universite
+            utilisateur = candidat;
+        } else if ("recruteur".equals(role)) {
+            Recruteur recruteur = new Recruteur();
+            recruteur.setEntreprise(rs.getString("entreprise")); // Entreprise
+            utilisateur = recruteur;
+        } else {
+            utilisateur = new Utilisateur(); // Default for other roles
+        }
+
+        // Set common attributes
         utilisateur.setIdUtilisateur(rs.getInt("id_utilisateur"));
         utilisateur.setNomUtilisateur(rs.getString("nom_utilisateur"));
         utilisateur.setEmail(rs.getString("email"));
         utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
-        utilisateur.setRole(rs.getString("role"));
+        utilisateur.setRole(role);
         utilisateur.setNom(rs.getString("nom"));
         utilisateur.setPrenom(rs.getString("prenom"));
-        Candidat.setAge(rs.getInt("age"));
-        Recruteur.setEntreprise(rs.getString("entreprise"));
-        Candidat.setNomUniversite(rs.getString("nom_universite"));
+
         return utilisateur;
     }
 }

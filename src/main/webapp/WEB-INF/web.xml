@@ -10,7 +10,7 @@
 
   <!-- Welcome File -->
   <welcome-file-list>
-    <welcome-file>views/candidat/CreerProfil.jsp</welcome-file>
+    <welcome-file>views/login/loginpage.jsp</welcome-file>
   </welcome-file-list>
 
 

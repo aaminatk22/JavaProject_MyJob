@@ -1,9 +1,9 @@
 package ma.ensi.model;
 
 public class Candidat extends Utilisateur {
-    private int age;
-    private String nomUniversite;
-    private String niveauEtude;
+    private int age; // Candidate's age
+    private String nomUniversite; // Candidate's university name
+    private String niveauEtude; // Candidate's education level
 
     // Default Constructor
     public Candidat() {
@@ -13,7 +13,7 @@ public class Candidat extends Utilisateur {
     // Parameterized Constructor
     public Candidat(int idUtilisateur, String nomUtilisateur, String email, String motDePasse, String role,
                     String nom, String prenom, int age, String nomUniversite, String niveauEtude) {
-        super(); // Call the parent class constructor if needed
+        super(); // Call the parent class constructor
         this.setIdUtilisateur(idUtilisateur);
         this.setNomUtilisateur(nomUtilisateur);
         this.setEmail(email);
@@ -27,20 +27,21 @@ public class Candidat extends Utilisateur {
         this.niveauEtude = niveauEtude;
     }
 
-    // Getters and Setters
-    public static int getAge() {
+    // Getters and Setters for additional fields
+
+    public int getAge() {
         return age;
     }
 
-    public static void setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public static String getNomUniversite() {
+    public String getNomUniversite() {
         return nomUniversite;
     }
 
-    public static void setNomUniversite(String nomUniversite) {
+    public void setNomUniversite(String nomUniversite) {
         this.nomUniversite = nomUniversite;
     }
 

@@ -1,37 +1,17 @@
 package ma.ensi.model;
 
 public class Document {
-    private int idDocument; // Identifiant unique du document
-    private int idUtilisateur; // Référence à l'utilisateur (id_utilisateur dans la table utilisateur)
-    private String type; // Type du document (par exemple, "CV", "Certification")
-    private String filePath; // Chemin du fichier ou URL du document
+    private int idPortfolio; // Foreign key to portfolio
+    private String type; // Type of document (e.g., Resume, Cover Letter)
+    private String filePath; // Path to the file
 
-    // Constructeur par défaut
-    public Document() {}
-
-    // Constructeur avec paramètres
-    public Document(int idDocument, int idUtilisateur, String type, String filePath) {
-        this.idDocument = idDocument;
-        this.idUtilisateur = idUtilisateur;
-        this.type = type;
-        this.filePath = filePath;
+    // Getters and Setters
+    public int getIdPortfolio() {
+        return idPortfolio;
     }
 
-    // Getters et Setters
-    public int getIdDocument() {
-        return idDocument;
-    }
-
-    public void setIdDocument(int idDocument) {
-        this.idDocument = idDocument;
-    }
-
-    public int getIdUtilisateur() {
-        return idUtilisateur;
-    }
-
-    public void setIdUtilisateur(int idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
+    public void setIdPortfolio(int idPortfolio) {
+        this.idPortfolio = idPortfolio;
     }
 
     public String getType() {
