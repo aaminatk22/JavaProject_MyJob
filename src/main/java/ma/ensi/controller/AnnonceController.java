@@ -21,13 +21,41 @@ public class AnnonceController extends HttpServlet {
         List<Annonce> annonces = annonceService.getAllAnnonces();
 
         if (annonces != null) {
-
             request.getSession().setAttribute("annonces", annonces);
-
             response.sendRedirect(request.getContextPath() + "/views/candidat/annonces.jsp");
         } else {
-
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve annonces.");
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Retrieve form parameters
+        String titre = request.getParameter("titre");
+        String typeAnnonce = request.getParameter("typeAnnonce");
+        String description = request.getParameter("description");
+
+        // Automatically get the user ID from the session (example)
+        int idUtilisateur = (int) request.getSession().getAttribute("userId");
+
+        // Create a new Annonce object
+        Annonce annonce = new Annonce();
+        annonce.setTitre(titre);
+        annonce.setTypeAnnonce(typeAnnonce);
+        annonce.setDescription(description);
+        annonce.setIdUtilisateur(idUtilisateur); // This is optional if not used in the database for this operation.
+
+        // Use the service to add the annonce
+        boolean isAdded = annonceService.addAnnonce(annonce);
+
+        if (isAdded) {
+            // Redirect to the list of annonces if successful
+            response.sendRedirect(request.getContextPath() + "/annonces");
+        } else {
+            // Return an error message if adding the annonce fails
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to add annonce.");
+        }
+    }
+
 }

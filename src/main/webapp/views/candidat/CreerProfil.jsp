@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="ma.ensi.model.Utilisateur" %>
 
-<%
-    // Check if the user is logged in
-    Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-    if (utilisateur == null) {
-        response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
-        return;
-    }
-%>
+
 
 <!DOCTYPE html>
 <html lang="en">

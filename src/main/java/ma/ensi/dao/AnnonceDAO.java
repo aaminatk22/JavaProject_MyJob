@@ -60,23 +60,23 @@ public class AnnonceDAO {
 
     // Add a new annonce
     public boolean addAnnonce(Annonce annonce) {
-        try (Connection connection = ConnexionBDD.getConnection()) {
-            String sql = "INSERT INTO annonce (titre, type_annonce, description, date_publication, id_utilisateur) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        String query = "INSERT INTO annonce (titre, type_annonce, description) VALUES (?, ?, ?)";
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, annonce.getTitre());
             preparedStatement.setString(2, annonce.getTypeAnnonce());
             preparedStatement.setString(3, annonce.getDescription());
-            preparedStatement.setString(4, annonce.getDatePublication());
-            preparedStatement.setInt(5, annonce.getIdUtilisateur());
 
+            // Execute the query
             int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
+            return rowsAffected > 0; // Return true if the insertion was successful
         } catch (SQLException e) {
-            System.out.println("Error adding annonce: " + e.getMessage());
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
+
 
     // Update an existing annonce
     public boolean updateAnnonce(Annonce annonce) {
