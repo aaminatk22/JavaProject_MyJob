@@ -13,46 +13,65 @@ public class UtilisateurDAO {
 
     // Save a new utilisateur
     public void saveUtilisateur(Utilisateur utilisateur) throws SQLException {
-        String query = "INSERT INTO utilisateur (nom_utilisateur, email, mot_de_passe, role, nom, prenom, age, entreprise, nom_universite) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO utilisateur (nom_utilisateur, email, mot_de_passe, role, nom, prenom, age, entreprise, nom_universite, tel) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = ConnexionBDD.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setString(1, utilisateur.getNomUtilisateur());
             ps.setString(2, utilisateur.getEmail());
-            ps.setString(3, utilisateur.getMotDePasse());
+            ps.setString(3, utilisateur.getMotDePasse()); // Save password
             ps.setString(4, utilisateur.getRole());
             ps.setString(5, utilisateur.getNom());
             ps.setString(6, utilisateur.getPrenom());
+            ps.setString(10, utilisateur.getTel()); // Correctly set the `tel` field
 
             // Check if the user is a Candidat
             if (utilisateur instanceof Candidat) {
                 Candidat candidat = (Candidat) utilisateur;
-                ps.setInt(7, candidat.getAge()); // Age is specific to Candidat
-                ps.setNull(8, java.sql.Types.VARCHAR); // Entreprise is not applicable for Candidat
-                ps.setString(9, candidat.getNomUniversite()); // Nom Universite is specific to Candidat
+                ps.setInt(7, candidat.getAge()); // Set `age` for Candidat
+                ps.setNull(8, java.sql.Types.VARCHAR); // `entreprise` is not applicable for Candidat
+                ps.setString(9, candidat.getNomUniversite()); // Set `nom_universite`
             }
             // Check if the user is a Recruteur
             else if (utilisateur instanceof Recruteur) {
                 Recruteur recruteur = (Recruteur) utilisateur;
-                ps.setNull(7, java.sql.Types.INTEGER); // Age is not applicable for Recruteur
-                ps.setString(8, recruteur.getEntreprise()); // Entreprise is specific to Recruteur
-                ps.setNull(9, java.sql.Types.VARCHAR); // Nom Universite is not applicable for Recruteur
+                ps.setNull(7, java.sql.Types.INTEGER); // `age` is not applicable for Recruteur
+                ps.setString(8, recruteur.getEntreprise()); // Set `entreprise` for Recruteur
+                ps.setNull(9, java.sql.Types.VARCHAR); // `nom_universite` is not applicable for Recruteur
             }
-            // Default case for other roles
+            // Default case
             else {
-                ps.setNull(7, java.sql.Types.INTEGER); // Age is null
-                ps.setNull(8, java.sql.Types.VARCHAR); // Entreprise is null
-                ps.setNull(9, java.sql.Types.VARCHAR); // Nom Universite is null
+                ps.setNull(7, java.sql.Types.INTEGER); // `age` is null
+                ps.setNull(8, java.sql.Types.VARCHAR); // `entreprise` is null
+                ps.setNull(9, java.sql.Types.VARCHAR); // `nom_universite` is null
             }
 
-            System.out.println("Executing query: " + ps.toString());
             ps.executeUpdate();
             System.out.println("User saved successfully in the database!");
         }
     }
 
+    // Update personal information of a user
+    public void updateUtilisateur(Utilisateur utilisateur) throws SQLException {
+        String query = "UPDATE utilisateur SET nom_utilisateur = ?, mot_de_passe = ?, nom = ?, prenom = ?, email = ?, tel = ? WHERE id_utilisateur = ?";
+
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, utilisateur.getNomUtilisateur()); // Update username
+            ps.setString(2, utilisateur.getMotDePasse()); // Update password
+            ps.setString(3, utilisateur.getNom());
+            ps.setString(4, utilisateur.getPrenom());
+            ps.setString(5, utilisateur.getEmail());
+            ps.setString(6, utilisateur.getTel()); // Update `tel` field
+            ps.setInt(7, utilisateur.getIdUtilisateur());
+
+            ps.executeUpdate();
+            System.out.println("User information updated successfully!");
+        }
+    }
 
     // Check if an email exists
     public boolean emailExists(String email) throws SQLException {
@@ -62,12 +81,9 @@ public class UtilisateurDAO {
 
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
+                return rs.next() && rs.getInt(1) > 0;
             }
         }
-        return false;
     }
 
     // Find a user by email
@@ -104,24 +120,22 @@ public class UtilisateurDAO {
 
     // Map a user from ResultSet
     private Utilisateur mapUtilisateur(ResultSet rs) throws SQLException {
-        // Determine the role and create the appropriate object
         String role = rs.getString("role");
         Utilisateur utilisateur;
 
         if ("candidat".equals(role)) {
             Candidat candidat = new Candidat();
-            candidat.setAge(rs.getInt("age")); // Age
-            candidat.setNomUniversite(rs.getString("nom_universite")); // Nom Universite
+            candidat.setAge(rs.getInt("age")); // Set `age`
+            candidat.setNomUniversite(rs.getString("nom_universite")); // Set `nom_universite`
             utilisateur = candidat;
         } else if ("recruteur".equals(role)) {
             Recruteur recruteur = new Recruteur();
-            recruteur.setEntreprise(rs.getString("entreprise")); // Entreprise
+            recruteur.setEntreprise(rs.getString("entreprise")); // Set `entreprise`
             utilisateur = recruteur;
         } else {
-            utilisateur = new Utilisateur(); // Default for other roles
+            utilisateur = new Utilisateur();
         }
 
-        // Set common attributes
         utilisateur.setIdUtilisateur(rs.getInt("id_utilisateur"));
         utilisateur.setNomUtilisateur(rs.getString("nom_utilisateur"));
         utilisateur.setEmail(rs.getString("email"));
@@ -129,6 +143,7 @@ public class UtilisateurDAO {
         utilisateur.setRole(role);
         utilisateur.setNom(rs.getString("nom"));
         utilisateur.setPrenom(rs.getString("prenom"));
+        utilisateur.setTel(rs.getString("tel")); // Set `tel`
 
         return utilisateur;
     }

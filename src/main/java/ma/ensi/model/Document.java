@@ -29,4 +29,8 @@ public class Document {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
+    public void setTypeDocument(String resume) {
+        this.type = resume;
+    }
 }
