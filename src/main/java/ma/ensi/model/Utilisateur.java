@@ -8,9 +8,9 @@ public class Utilisateur {
     private String role;
     private String nom;
     private String prenom;
+    private String tel; // New field for phone number
 
-
-    // Getters et Setters
+    // Getters and Setters
     public int getIdUtilisateur() {
         return idUtilisateur;
     }
@@ -67,6 +67,15 @@ public class Utilisateur {
         this.prenom = prenom;
     }
 
-    public void setPassword(String password) { this.motDePasse = password; }
+    public String getTel() {
+        return tel;
+    }
 
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public void setPassword(String password) {
+        this.motDePasse = password;
+    }
 }

@@ -15,7 +15,7 @@ public class Recruteur extends Utilisateur {
 
     // Parameterized Constructor
     public Recruteur(int idUtilisateur, String nomUtilisateur, String email, String motDePasse, String role,
-                     String nom, String prenom, String entreprise, String poste, List<Annonce> annonces) {
+                     String nom, String prenom, String tel, String entreprise, String poste, List<Annonce> annonces) {
         super(); // Calls the parent (Utilisateur) constructor
         this.setIdUtilisateur(idUtilisateur);
         this.setNomUtilisateur(nomUtilisateur);
@@ -24,6 +24,7 @@ public class Recruteur extends Utilisateur {
         this.setRole(role);
         this.setNom(nom);
         this.setPrenom(prenom);
+        this.setTel(tel);
 
         this.entreprise = entreprise;
         this.poste = poste;
