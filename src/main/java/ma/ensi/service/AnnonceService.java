@@ -35,4 +35,9 @@ public class AnnonceService {
     public boolean deleteAnnonce(int id) {
         return annonceDAO.deleteAnnonce(id);
     }
+
+    public List<Annonce> getAnnoncesByRecruiter(int recruiterId) {
+        return annonceDAO.getAnnoncesByRecruiter(recruiterId);
+    }
+
 }

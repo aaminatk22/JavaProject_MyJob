@@ -10,12 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Contrôleur pour gérer les processus de connexion et d'inscription des utilisateurs.
- */
 @WebServlet(name = "UtilisateurController", urlPatterns = {"/login", "/register"})
 public class UtilisateurController extends HttpServlet {
     private final UtilisateurService utilisateurService = new UtilisateurService();
@@ -33,44 +31,53 @@ public class UtilisateurController extends HttpServlet {
         }
     }
 
-    /**
-     * Gestion du processus de connexion.
-     */
     private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         try {
-            // Appel du service pour authentifier l'utilisateur
+            // Authenticate the user
             Utilisateur utilisateur = utilisateurService.login(email, password);
 
-            // Connexion réussie : stocker l'utilisateur en session
-            request.getSession().setAttribute("utilisateur", utilisateur);
-            AnnonceService annonceService = new AnnonceService();
-            List<Annonce> annonces = annonceService.getAllAnnonces();
-            request.getSession().setAttribute("annonces",annonces );
-            response.sendRedirect("views/candidat/CreerProfil.jsp"); // Page après connexion réussie
+            if (utilisateur != null) {
+                // Set user attributes in session
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", utilisateur.getIdUtilisateur());
+                session.setAttribute("utilisateur", utilisateur);
+                session.setAttribute("role", utilisateur.getRole());
+
+                // Log the role for debugging
+                System.out.println("Authenticated user: " + utilisateur.getNomUtilisateur() + ", Role: " + utilisateur.getRole());
+
+                // Redirect based on role
+                if ("recruteur".equalsIgnoreCase(utilisateur.getRole())) {
+                    response.sendRedirect("views/recruteur/RecruiterSpace.jsp");
+                } else if ("candidat".equalsIgnoreCase(utilisateur.getRole())) {
+                    AnnonceService annonceService = new AnnonceService();
+                    List<Annonce> annonces = annonceService.getAllAnnonces();
+                    session.setAttribute("annonces", annonces);
+                    response.sendRedirect("views/candidat/CreerProfil.jsp");
+                } else {
+                    System.out.println("Unknown role detected, redirecting to login page.");
+                    response.sendRedirect("views/login/loginpage.jsp?error=UnknownRole");
+                }
+            } else {
+                // Invalid credentials
+                request.setAttribute("error", "Email ou mot de passe incorrect !");
+                request.getRequestDispatcher("views/login/loginpage.jsp").forward(request, response);
+            }
         } catch (Exception e) {
-            // Connexion échouée : afficher un message d'erreur
-            request.setAttribute("error", "Email ou mot de passe incorrect !");
+            e.printStackTrace();
+            request.setAttribute("error", "Une erreur est survenue pendant la connexion !");
             request.getRequestDispatcher("views/login/loginpage.jsp").forward(request, response);
         }
     }
 
-    /**
-     * Gestion du processus d'inscription.
-     */
     private void handleRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nomUtilisateur = request.getParameter("nomUtilisateur");
         String email = request.getParameter("email");
         String motDePasse = request.getParameter("motDePasse");
         String rePass = request.getParameter("rePass");
-
-        // Debug logs
-        System.out.println("Nom Utilisateur: " + nomUtilisateur);
-        System.out.println("Email: " + email);
-        System.out.println("Mot de Passe: " + motDePasse);
-        System.out.println("Re-pass: " + rePass);
 
         if (!motDePasse.equals(rePass)) {
             request.setAttribute("error", "Les mots de passe ne correspondent pas !");
@@ -85,16 +92,13 @@ public class UtilisateurController extends HttpServlet {
         utilisateur.setRole("Candidat"); // Default role
 
         try {
-            // Call service to register
             utilisateurService.register(utilisateur);
             System.out.println("User registered successfully!");
             response.sendRedirect("views/login/loginpage.jsp?success=true");
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", e.getMessage());
+            request.setAttribute("error", "Une erreur est survenue pendant l'inscription !");
             request.getRequestDispatcher("views/login/register.jsp").forward(request, response);
         }
     }
-
 }
-

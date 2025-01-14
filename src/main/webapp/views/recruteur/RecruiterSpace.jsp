@@ -1,13 +1,16 @@
+<%@ page import="ma.ensi.model.Utilisateur" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
-    // Authentication logic: Redirect to login page if user is not authenticated
-    if (session == null || session.getAttribute("userId") == null || session.getAttribute("userRole") == null ||
-            !session.getAttribute("userRole").equals("recruteur")) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
+    // Check if the user is logged in and has the "Recruteur" role
+    Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+    if (utilisateur == null || !"recruteur".equalsIgnoreCase(utilisateur.getRole())) {
+        response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
         return;
     }
 %>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +28,7 @@
     <div class="flex items-center justify-between max-w-6xl mx-auto">
         <h1 class="text-lg font-bold">Espace Recruteur</h1>
         <div>
-            <span class="mr-4">Bonjour, <strong><%= session.getAttribute("userName") %></strong></span>
+            <span>Bienvenue, <strong><%= utilisateur.getNomUtilisateur() %></strong></span>
             <a href="<%= request.getContextPath() + "/logout" %>" class="text-white underline">Déconnexion</a>
         </div>
     </div>

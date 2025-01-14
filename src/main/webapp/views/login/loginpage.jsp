@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password"><i class="fa-solid fa-lock"></i></label>
-                            <input type="password" name="password" id="password" placeholder="Password" required />
+                            <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password" required />
                         </div>
                         <div class="form-group form-button">
                             <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />

@@ -114,4 +114,32 @@ public class AnnonceDAO {
         }
         return false;
     }
+
+
+
+    public List<Annonce> getAnnoncesByRecruiter(int recruiterId) {
+        List<Annonce> annonces = new ArrayList<>();
+        String query = "SELECT * FROM annonce WHERE id_utilisateur = ?";
+
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, recruiterId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Annonce annonce = new Annonce();
+                    annonce.setIdAnnonce(resultSet.getInt("id_annonce"));
+                    annonce.setTitre(resultSet.getString("titre"));
+                    annonce.setDescription(resultSet.getString("description"));
+                    annonce.setDatePublication(resultSet.getString("date_publication"));
+                    annonces.add(annonce);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return annonces;
+    }
+
 }
