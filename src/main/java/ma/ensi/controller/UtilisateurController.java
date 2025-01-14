@@ -51,7 +51,12 @@ public class UtilisateurController extends HttpServlet {
 
                 // Redirect based on role
                 if ("recruteur".equalsIgnoreCase(utilisateur.getRole())) {
+                    AnnonceService annonceService = new AnnonceService();
+                    // Use getAnnoncesByRecruiter to fetch announcements for the specific recruiter
+                    List<Annonce> annonces = annonceService.getAnnoncesByRecruiter(utilisateur.getIdUtilisateur());
+                    session.setAttribute("annonces", annonces);
                     response.sendRedirect("views/recruteur/RecruiterSpace.jsp");
+
                 } else if ("candidat".equalsIgnoreCase(utilisateur.getRole())) {
                     AnnonceService annonceService = new AnnonceService();
                     List<Annonce> annonces = annonceService.getAllAnnonces();

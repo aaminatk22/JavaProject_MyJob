@@ -60,12 +60,14 @@ public class AnnonceDAO {
 
     // Add a new annonce
     public boolean addAnnonce(Annonce annonce) {
-        String query = "INSERT INTO annonce (titre, type_annonce, description) VALUES (?, ?, ?)";
+        String query = "INSERT INTO annonce (titre, type_annonce, description, id_utilisateur) VALUES (?, ?, ?, ?)";
         try (Connection connection = ConnexionBDD.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, annonce.getTitre());
             preparedStatement.setString(2, annonce.getTypeAnnonce());
             preparedStatement.setString(3, annonce.getDescription());
+            preparedStatement.setInt(4, annonce.getIdUtilisateur()); // Set id_utilisateur
 
             // Execute the query
             int rowsAffected = preparedStatement.executeUpdate();
@@ -75,6 +77,7 @@ public class AnnonceDAO {
             return false;
         }
     }
+
 
 
 
@@ -119,21 +122,23 @@ public class AnnonceDAO {
 
     public List<Annonce> getAnnoncesByRecruiter(int recruiterId) {
         List<Annonce> annonces = new ArrayList<>();
-        String query = "SELECT * FROM annonce WHERE id_utilisateur = ?";
+        String sql = "SELECT * FROM annonce WHERE id_utilisateur = ?";
 
         try (Connection connection = ConnexionBDD.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, recruiterId);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    Annonce annonce = new Annonce();
-                    annonce.setIdAnnonce(resultSet.getInt("id_annonce"));
-                    annonce.setTitre(resultSet.getString("titre"));
-                    annonce.setDescription(resultSet.getString("description"));
-                    annonce.setDatePublication(resultSet.getString("date_publication"));
-                    annonces.add(annonce);
-                }
+            preparedStatement.setInt(1, recruiterId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Annonce annonce = new Annonce();
+                annonce.setIdAnnonce(resultSet.getInt("id_annonce"));
+                annonce.setTitre(resultSet.getString("titre"));
+                annonce.setTypeAnnonce(resultSet.getString("type_annonce"));
+                annonce.setDescription(resultSet.getString("description"));
+                annonce.setDatePublication(resultSet.getString("date_publication"));
+                annonce.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                annonces.add(annonce);
             }
         } catch (SQLException e) {
             e.printStackTrace();

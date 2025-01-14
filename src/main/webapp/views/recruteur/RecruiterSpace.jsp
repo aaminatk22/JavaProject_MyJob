@@ -1,4 +1,6 @@
 <%@ page import="ma.ensi.model.Utilisateur" %>
+<%@ page import="ma.ensi.model.Annonce" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
@@ -8,9 +10,10 @@
         response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
         return;
     }
+
+    // Retrieve the list of annonces from the session
+    List<Annonce> annonces = (List<Annonce>) session.getAttribute("annonces");
 %>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,16 +57,26 @@
     <div class="bg-white p-4 rounded-lg shadow">
         <h2 class="text-lg font-semibold mb-4">Annonces publiées</h2>
         <ul>
-            <c:forEach var="annonce" items="${sessionScope.annonces}">
-                <li class="p-4 border rounded-lg flex justify-between items-center mb-2">
-                    <div>
-                        <h3 class="text-lg font-semibold">${annonce.titre}</h3>
-                        <p class="text-gray-600">${annonce.typeAnnonce} - ${annonce.description}</p>
-                        <p class="text-gray-500 text-sm">Publié le : ${annonce.datePublication}</p>
-                    </div>
-                    <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600">Supprimer</button>
-                </li>
-            </c:forEach>
+            <%
+                if (annonces != null && !annonces.isEmpty()) {
+                    for (Annonce annonce : annonces) {
+            %>
+            <li class="p-4 border rounded-lg flex justify-between items-center mb-2">
+                <div>
+                    <h3 class="text-lg font-semibold"><%= annonce.getTitre() %></h3>
+                    <p class="text-gray-600"><%= annonce.getTypeAnnonce() %> - <%= annonce.getDescription() %></p>
+                    <p class="text-gray-500 text-sm">Publié le : <%= annonce.getDatePublication() %></p>
+                </div>
+                <button class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600">Supprimer</button>
+            </li>
+            <%
+                }
+            } else {
+            %>
+            <p class="text-gray-500">Aucune annonce publiée pour le moment.</p>
+            <%
+                }
+            %>
         </ul>
     </div>
 </div>
@@ -72,7 +85,7 @@
 <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden justify-center items-center">
     <div class="bg-white p-6 rounded-lg w-1/3">
         <h2 class="text-lg font-bold mb-4">Ajouter une annonce</h2>
-        <form action="${pageContext.request.contextPath}/annonces" method="POST" class="space-y-4">
+        <form action="<%= request.getContextPath() %>/annonces" method="POST" class="space-y-4">
             <label>
                 <input type="text" name="titre" placeholder="Titre du poste" class="p-2 border rounded-lg w-full" required>
             </label>

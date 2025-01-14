@@ -20,18 +20,42 @@ public class AnnonceController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+
+        // Check if the session exists and user is logged in
         if (session == null || session.getAttribute("userId") == null) {
             response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
             return;
         }
 
-        List<Annonce> annonces = annonceService.getAllAnnonces();
+        // Retrieve userId and role from session
+        Integer userId = (Integer) session.getAttribute("userId");
+        String role = (String) session.getAttribute("role");
 
-        if (annonces != null) {
-            session.setAttribute("annonces", annonces);
-            response.sendRedirect(request.getContextPath() + "/views/candidat/annonces.jsp");
+        if ("candidat".equalsIgnoreCase(role)) {
+            // Fetch all annonces for candidates
+            List<Annonce> annonces = annonceService.getAllAnnonces();
+
+            if (annonces != null) {
+                // Store annonces in session and redirect to the candidate page
+                session.setAttribute("annonces", annonces);
+                response.sendRedirect(request.getContextPath() + "/views/candidat/annonces.jsp");
+            } else {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve annonces.");
+            }
+        } else if ("recruteur".equalsIgnoreCase(role)) {
+            // Fetch only annonces shared by this recruiter
+            List<Annonce> annonces = annonceService.getAnnoncesByRecruiter(userId);
+
+            if (annonces != null) {
+                // Store annonces in session and redirect to the recruiter space page
+                session.setAttribute("annonces", annonces);
+                response.sendRedirect(request.getContextPath() + "/views/recruteur/RecruiterSpace.jsp");
+            } else {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve recruiter-specific annonces.");
+            }
         } else {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve annonces.");
+            // If role is unknown, redirect to the login page
+            response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
         }
     }
 
