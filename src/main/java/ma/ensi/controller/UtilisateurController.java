@@ -61,7 +61,7 @@ public class UtilisateurController extends HttpServlet {
                     AnnonceService annonceService = new AnnonceService();
                     List<Annonce> annonces = annonceService.getAllAnnonces();
                     session.setAttribute("annonces", annonces);
-                    response.sendRedirect("views/candidat/CreerProfil.jsp");
+                    response.sendRedirect("views/candidat/createportfolio.jsp");
                 } else {
                     System.out.println("Unknown role detected, redirecting to login page.");
                     response.sendRedirect("views/login/loginpage.jsp?error=UnknownRole");

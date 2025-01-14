@@ -21,4 +21,17 @@ public class CompetenceDAO {
             stmt.executeUpdate();
         }
     }
+
+
+    public void addCompetence(Competence competence) throws Exception {
+        String query = "INSERT INTO competence (id_portfolio, nom, niveau) VALUES (?, ?, ?)";
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, competence.getIdPortfolio());
+            preparedStatement.setString(2, competence.getNom());
+            preparedStatement.setString(3, competence.getNiveau());
+            preparedStatement.executeUpdate();
+        }
+    }
+
 }

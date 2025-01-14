@@ -51,7 +51,7 @@ public class ProfileService {
             portfolio.setIdUtilisateur(idUtilisateur);
             portfolio.setDescription(description);
 
-            int portfolioId = portfolioDAO.savePortfolio(portfolio); // Save portfolio and get its ID
+            int portfolioId = portfolioDAO.createPortfolio(portfolio); // Save portfolio and get its ID
             portfolio.setIdPortfolio(portfolioId);
 
             // Step 2: Save Competences

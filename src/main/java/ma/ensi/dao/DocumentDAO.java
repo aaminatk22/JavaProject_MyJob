@@ -22,4 +22,15 @@ public class DocumentDAO {
         }
     }
 
+    public void addDocument(Document document) throws Exception {
+        String query = "INSERT INTO document (id_portfolio, type_document, file_path) VALUES (?, ?, ?)";
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, document.getIdPortfolio());
+            preparedStatement.setString(2, document.getType());
+            preparedStatement.setString(3, document.getFilePath());
+            preparedStatement.executeUpdate();
+        }
+    }
+
 }

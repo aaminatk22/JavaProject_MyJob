@@ -27,5 +27,6 @@ public class CandidatController extends HttpServlet {
     }
 
 
-    // Handle POST, PUT, DELETE requests similarly
+
 }
+

@@ -25,4 +25,20 @@ public class ExperienceDAO {
             stmt.executeUpdate();
         }
     }
+
+    public void addExperience(Experience experience) throws Exception {
+        String query = "INSERT INTO experience (id_portfolio, titre, entreprise, date_debut, date_fin, description) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, experience.getIdPortfolio());
+            preparedStatement.setString(2, experience.getTitre());
+            preparedStatement.setString(3, experience.getEntreprise());
+            preparedStatement.setDate(4, experience.getDateDebut());
+            preparedStatement.setDate(5, experience.getDateFin());
+            preparedStatement.setString(6, experience.getDescription());
+            preparedStatement.executeUpdate();
+        }
+    }
+
 }

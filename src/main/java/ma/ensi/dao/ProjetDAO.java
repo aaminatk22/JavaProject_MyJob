@@ -21,4 +21,17 @@ public class ProjetDAO {
             stmt.executeUpdate();
         }
     }
+
+    public void addProjet(Projet projet) throws Exception {
+        String query = "INSERT INTO projet (id_portfolio, titre, description, technologie) VALUES (?, ?, ?, ?)";
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, projet.getIdPortfolio());
+            preparedStatement.setString(2, projet.getTitre());
+            preparedStatement.setString(3, projet.getDescription());
+            preparedStatement.setString(4, projet.getTechnologie());
+            preparedStatement.executeUpdate();
+        }
+    }
+
 }
