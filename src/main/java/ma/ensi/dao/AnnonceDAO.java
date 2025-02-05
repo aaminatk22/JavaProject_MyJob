@@ -83,20 +83,27 @@ public class AnnonceDAO {
 
     // Update an existing annonce
     public boolean updateAnnonce(Annonce annonce) {
-        try (Connection connection = ConnexionBDD.getConnection()) {
-            String sql = "UPDATE annonce SET titre = ?, type_annonce = ?, description = ?, date_publication = ?, id_utilisateur = ? WHERE id_annonce = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        String sql = "UPDATE annonce SET titre = ?, type_annonce = ?, description = ?, id_utilisateur = ? WHERE id_annonce = ?";
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Validate inputs
+            if (annonce.getTitre() == null || annonce.getTypeAnnonce() == null || annonce.getDescription() == null) {
+                throw new IllegalArgumentException("Fields titre, type_annonce, and description cannot be null");
+            }
+
+            // Set parameters
             preparedStatement.setString(1, annonce.getTitre());
             preparedStatement.setString(2, annonce.getTypeAnnonce());
             preparedStatement.setString(3, annonce.getDescription());
-            preparedStatement.setString(4, annonce.getDatePublication());
-            preparedStatement.setInt(5, annonce.getIdUtilisateur());
-            preparedStatement.setInt(6, annonce.getIdAnnonce());
+            preparedStatement.setInt(4, annonce.getIdUtilisateur());
+            preparedStatement.setInt(5, annonce.getIdAnnonce());
 
+            // Execute update
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            System.out.println("Error updating annonce: " + e.getMessage());
+            System.err.println("Error updating annonce: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
