@@ -125,7 +125,6 @@ public class AnnonceDAO {
         return false;
     }
 
-
     public List<Annonce> getAnnoncesByRecruteurId(int idUtilisateur) {
         List<Annonce> annonces = new ArrayList<>();
         String query = "SELECT * FROM annonce WHERE id_utilisateur = ?";

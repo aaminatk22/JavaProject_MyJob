@@ -17,7 +17,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <script src="${pageContext.request.contextPath}/js/stepper.js" defer></script>
 </head>
 <body class="bg-gray-100">
 
@@ -52,84 +51,16 @@
                 <label for="age" class="block text-gray-700">Age</label>
                 <input type="number" id="age" name="age" class="w-full p-2 border rounded-lg" required>
             </div>
-            <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg" onclick="goToStep(2)">Next</button>
-        </div>
 
-        <!-- Step 2: Academic Info -->
-        <div id="step-2" class="step hidden">
-            <h2 class="text-lg font-bold mb-4">Step 2: Academic Information</h2>
+            <!-- University Info -->
             <div class="mb-4">
                 <label for="university" class="block text-gray-700">University</label>
                 <input type="text" id="university" name="university" class="w-full p-2 border rounded-lg" required>
             </div>
-            <div class="mb-4">
-                <label for="level" class="block text-gray-700">Level of Study</label>
-                <input type="text" id="level" name="level" class="w-full p-2 border rounded-lg" required>
-            </div>
-            <div class="mb-4">
-                <label for="languages" class="block text-gray-700">Languages</label>
-                <input type="text" id="languages" name="languages" class="w-full p-2 border rounded-lg">
-            </div>
-            <div class="mb-4">
-                <label for="description" class="block text-gray-700">Profile Description</label>
-                <textarea id="description" name="description" class="w-full p-2 border rounded-lg"></textarea>
-            </div>
-            <button type="button" class="px-4 py-2 bg-gray-300 rounded-lg mr-2" onclick="goToStep(1)">Back</button>
-            <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg" onclick="goToStep(3)">Next</button>
-        </div>
-
-        <!-- Step 3: Projects, Skills, Experiences -->
-        <div id="step-3" class="step hidden">
-            <h2 class="text-lg font-bold mb-4">Step 3: Projects, Skills, Experiences</h2>
-
-            <!-- Projects -->
-            <div class="mb-4">
-                <label for="projectInput" class="block text-gray-700">Add a Project</label>
-                <div class="flex">
-                    <input type="text" id="projectInput" class="w-full p-2 border rounded-lg">
-                    <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg ml-2"
-                            onclick="addToList('projectsList', 'projectInput')">Add</button>
-                </div>
-                <ul id="projectsList" class="mt-4"></ul>
-            </div>
-
-            <!-- Skills -->
-            <div class="mb-4">
-                <label for="skillInput" class="block text-gray-700">Add a Skill</label>
-                <div class="flex">
-                    <input type="text" id="skillInput" class="w-full p-2 border rounded-lg">
-                    <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg ml-2"
-                            onclick="addToList('skillsList', 'skillInput')">Add</button>
-                </div>
-                <ul id="skillsList" class="mt-4"></ul>
-            </div>
-
-            <!-- Experiences -->
-            <div class="mb-4">
-                <label for="experienceInput" class="block text-gray-700">Add an Experience</label>
-                <div class="flex">
-                    <input type="text" id="experienceInput" class="w-full p-2 border rounded-lg">
-                    <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg ml-2"
-                            onclick="addToList('experiencesList', 'experienceInput')">Add</button>
-                </div>
-                <ul id="experiencesList" class="mt-4"></ul>
-            </div>
-
-            <button type="button" class="px-4 py-2 bg-gray-300 rounded-lg mr-2" onclick="goToStep(2)">Back</button>
-            <button type="button" class="px-4 py-2 bg-blue-500 text-white rounded-lg" onclick="goToStep(4)">Next</button>
-        </div>
-
-        <!-- Step 4: Resume Upload -->
-        <div id="step-4" class="step hidden">
-            <h2 class="text-lg font-bold mb-4">Step 4: Upload Resume</h2>
-            <div class="mb-4">
-                <label for="resume" class="block text-gray-700">Upload Resume</label>
-                <input type="file" id="resume" name="resume" class="w-full p-2 border rounded-lg" required>
-            </div>
-            <button type="button" class="px-4 py-2 bg-gray-300 rounded-lg mr-2" onclick="goToStep(3)">Back</button>
             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Submit</button>
         </div>
     </form>
 </div>
+
 </body>
 </html>

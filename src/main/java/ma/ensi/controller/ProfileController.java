@@ -1,6 +1,7 @@
 package ma.ensi.controller;
 
 import ma.ensi.model.*;
+import ma.ensi.service.PortfolioService;
 import ma.ensi.service.ProfileService;
 
 import javax.servlet.ServletException;
@@ -16,19 +17,30 @@ import java.util.List;
 @MultipartConfig
 public class ProfileController extends HttpServlet {
     private final ProfileService profileService = new ProfileService();
+    private final PortfolioService portfolioService = new PortfolioService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Check if user is logged in
         Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
         if (utilisateur == null) {
             response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
             return;
         }
 
-        // Render the profile creation page
-        request.getRequestDispatcher("/views/candidat/CreerProfil.jsp").forward(request, response);
+        // Retrieve portfolio associated with the user
+        Portfolio portfolio = portfolioService.getPortfolioByUserId(utilisateur.getIdUtilisateur());
+
+        // Add attributes to the request
+        request.setAttribute("utilisateur", utilisateur);
+        request.setAttribute("portfolio", portfolio);
+        if (utilisateur instanceof Candidat) {
+            Candidat candidat = (Candidat) utilisateur;
+            request.setAttribute("nomUniversite", candidat.getNomUniversite()); // Pass the university name
+        }
+
+        // Forward to the profile view page
+        request.getRequestDispatcher("/views/candidat/CandidatProfil.jsp").forward(request, response);
     }
 
     @Override
@@ -54,73 +66,30 @@ public class ProfileController extends HttpServlet {
                 utilisateur.setMotDePasse(newPassword);
             }
 
-            // Update username and password in the database
-            profileService.updatePersonalInfo(utilisateur);
-
             // Step 3: Retrieve personal information
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
-            String tel = request.getParameter("tel"); // Retrieve the `tel` field
+            String tel = request.getParameter("tel");
+            int age = Integer.parseInt(request.getParameter("age")); // Retrieve age
+            String university = request.getParameter("university"); // Retrieve university
 
             utilisateur.setNom(firstName);
             utilisateur.setPrenom(lastName);
             utilisateur.setEmail(email);
-            utilisateur.setTel(tel); // Set `tel` field
+            utilisateur.setTel(tel);
+
+            // Cast to Candidat and set age and university
+            if (utilisateur instanceof Candidat) {
+                Candidat candidat = (Candidat) utilisateur;
+                candidat.setAge(age); // Set age
+                candidat.setNomUniversite(university); // Set university
+            }
 
             // Update personal information in the database
             profileService.updatePersonalInfo(utilisateur);
 
-            // Step 4: Retrieve form inputs
-            String description = request.getParameter("description");
-            String university = request.getParameter("university");
-            String levelOfStudy = request.getParameter("level");
-            String languages = request.getParameter("languages");
-
-            // Step 5: Parse dynamic fields (projects, skills, experiences)
-            List<Competence> competences = parseCompetences(request);
-            List<Projet> projets = parseProjets(request);
-            List<Experience> experiences = parseExperiences(request);
-
-            // Step 6: Handle Resume Upload
-            Part resumePart = request.getPart("resume");
-            String filePath = null;
-            if (resumePart != null && resumePart.getSize() > 0) {
-                String fileName = resumePart.getSubmittedFileName();
-                String uploadPath = getServletContext().getRealPath("") + "/uploads/";
-                File uploadDir = new File(uploadPath);
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdirs();
-                }
-                filePath = uploadPath + fileName;
-                resumePart.write(filePath);
-            }
-
-            // Create Document object for resume
-            Document resumeDocument = null;
-            if (filePath != null) {
-                resumeDocument = new Document();
-                resumeDocument.setType("Resume");
-                resumeDocument.setFilePath(filePath);
-            }
-
-            // Step 7: Save Profile
-            Portfolio portfolio = profileService.createProfile(
-                    idUtilisateur,
-                    description,
-                    competences,
-                    projets,
-                    experiences,
-                    resumeDocument
-            );
-
-            // Step 8: Redirect to a success page
-            if (portfolio != null) {
-                response.sendRedirect(request.getContextPath() + "/views/candidat/annonces.jsp");
-            } else {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error saving profile.");
-            }
-
+            // Rest of the code...
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing profile.");

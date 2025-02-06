@@ -143,9 +143,5 @@ public class CandidatureController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/views/recruteur/espaceRecruteur.jsp");
         }
     }
-
-
-
-
 }
 

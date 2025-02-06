@@ -31,4 +31,10 @@ public class PortfolioService {
             portfolioDAO.addProjet(projet);
         }
     }
+
+    public Portfolio getPortfolioByUserId(int idUtilisateur) {
+        PortfolioDAO portfolioDAO = new PortfolioDAO(); // Create an instance of PortfolioDAO
+        return portfolioDAO.getPortfolioByUserId(idUtilisateur); // Call the method on the instance
+    }
+
 }
