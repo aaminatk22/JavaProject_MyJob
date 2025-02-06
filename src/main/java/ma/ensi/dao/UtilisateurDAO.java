@@ -55,24 +55,34 @@ public class UtilisateurDAO {
 
     // Update personal information of a user
     public void updateUtilisateur(Utilisateur utilisateur) throws SQLException {
-        String query = "UPDATE utilisateur SET nom_utilisateur = ?, mot_de_passe = ?, nom = ?, prenom = ?, email = ?, tel = ? WHERE id_utilisateur = ?";
+        String query = "UPDATE utilisateur SET nom_utilisateur = ?, mot_de_passe = ?, nom = ?, prenom = ?, email = ?, tel = ?, age = ?, nom_universite = ? WHERE id_utilisateur = ?";
 
         try (Connection connection = ConnexionBDD.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
 
-            ps.setString(1, utilisateur.getNomUtilisateur()); // Update username
-            ps.setString(2, utilisateur.getMotDePasse()); // Update password
+            ps.setString(1, utilisateur.getNomUtilisateur());
+            ps.setString(2, utilisateur.getMotDePasse());
             ps.setString(3, utilisateur.getNom());
             ps.setString(4, utilisateur.getPrenom());
             ps.setString(5, utilisateur.getEmail());
-            ps.setString(6, utilisateur.getTel()); // Update `tel` field
-            ps.setInt(7, utilisateur.getIdUtilisateur());
+            ps.setString(6, utilisateur.getTel());
+
+            // Set age and nom_universite for Candidat
+            if (utilisateur instanceof Candidat) {
+                Candidat candidat = (Candidat) utilisateur;
+                ps.setInt(7, candidat.getAge()); // Set age
+                ps.setString(8, candidat.getNomUniversite()); // Set nom_universite
+            } else {
+                ps.setNull(7, java.sql.Types.INTEGER); // age is null
+                ps.setNull(8, java.sql.Types.VARCHAR); // nom_universite is null
+            }
+
+            ps.setInt(9, utilisateur.getIdUtilisateur()); // Set user ID for the update condition
 
             ps.executeUpdate();
             System.out.println("User information updated successfully!");
         }
     }
-
     // Check if an email exists
     public boolean emailExists(String email) throws SQLException {
         String query = "SELECT COUNT(*) FROM utilisateur WHERE email = ?";

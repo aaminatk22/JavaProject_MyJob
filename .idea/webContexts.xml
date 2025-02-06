@@ -8,6 +8,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/Profile.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/RecruiterDashboard.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/RecruiterSpace.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/candidateDetails.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/viewApplications.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
       </map>
     </option>
