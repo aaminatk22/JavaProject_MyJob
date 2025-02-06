@@ -107,9 +107,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%= request.getContextPath() %>/views/recruteur/viewApplications.jsp">
+                    <a href="<%= request.getContextPath() %>/views/candidat/mesCandidatures.jsp">
                         <i class='bx bx-columns icon' ></i>
-                        Candidatures
+                        Mes Candidatures
                         <i class='bx bx-chevron-right icon-right' ></i>
                     </a>
                 </li>

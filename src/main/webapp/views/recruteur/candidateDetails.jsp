@@ -29,6 +29,15 @@
   <title>Profile du Candidat</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Include Required CSS -->
+  <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/modules/fontawesome6.1.1/css/all.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/modules/boxicons/css/boxicons.min.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap JS (required for interactive components) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="bg-gray-100">
 
@@ -52,7 +61,6 @@
     Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
     if (portfolio != null) {
   %>
-  <p><strong>Projet:</strong> <%= portfolio.getProjet() %></p>
   <p><strong>Description:</strong> <%= portfolio.getDescription() %></p>
   <!-- Add more details as needed -->
   <% } else { %>
