@@ -81,13 +81,6 @@
                         <i class='bx bx-chevron-right icon-right' ></i>
                     </a>
                 </li>
-                <li>
-                    <a href="<%= request.getContextPath() %>/views/recruteur/viewApplications.jsp">
-                        <i class='bx bx-columns icon' ></i>
-                        Candidatures
-                        <i class='bx bx-chevron-right icon-right' ></i>
-                    </a>
-                </li>
             </ul>
         </div>
 
@@ -124,7 +117,7 @@
                     <input type="hidden" name="idCandidature" value="<%= candidature.getIdCandidature() %>" />
                     <input type="hidden" name="idAnnonce" value="<%= candidature.getIdAnnonce() %>" />
                     <input type="hidden" name="idUtilisateur" value="<%= candidature.getIdUtilisateur() %>" />
-                    <input type="hidden" name="statut" value="Accepté" />
+                    <input type="hidden" name="statut" value="Accepted" />
                     <input type="hidden" name="action" value="accept" />
                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                         Accepter
@@ -136,7 +129,7 @@
                     <input type="hidden" name="idCandidature" value="<%= candidature.getIdCandidature() %>" />
                     <input type="hidden" name="idAnnonce" value="<%= candidature.getIdAnnonce() %>" />
                     <input type="hidden" name="idUtilisateur" value="<%= candidature.getIdUtilisateur() %>" />
-                    <input type="hidden" name="statut" value="Refusé" />
+                    <input type="hidden" name="statut" value="Refused" />
                     <input type="hidden" name="action" value="reject" />
                     <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
                         Refuser

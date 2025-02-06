@@ -92,7 +92,7 @@
                 <li>
                     <a href="<%= request.getContextPath() %>/views/recruteur/RecruiterDashboard.jsp">
                         <i class='bx bx-columns icon' ></i>
-                        Espace Recrueteur
+                        Espace Recruteur
                         <i class='bx bx-chevron-right icon-right' ></i>
                     </a>
                 </li>
@@ -101,13 +101,6 @@
                     <a href="<%= request.getContextPath() %>/views/recruteur/annoncesR.jsp">
                         <i class='bx bx-columns icon' ></i>
                         Annonces
-                        <i class='bx bx-chevron-right icon-right' ></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%= request.getContextPath() %>/views/recruteur/viewApplications.jsp">
-                        <i class='bx bx-columns icon' ></i>
-                        Candidatures
                         <i class='bx bx-chevron-right icon-right' ></i>
                     </a>
                 </li>

@@ -53,13 +53,6 @@
             <i class='bx bx-chevron-right icon-right' ></i>
           </a>
         </li>
-        <li>
-          <a href="<%= request.getContextPath() %>/views/recruteur/viewApplications.jsp">
-            <i class='bx bx-columns icon' ></i>
-            Candidatures
-            <i class='bx bx-chevron-right icon-right' ></i>
-          </a>
-        </li>
       </ul>
     </div>
 
