@@ -47,15 +47,9 @@
 <div class="sidebar transition overlay-scrollbars animate_animated  animate_slideInLeft">
     <div class="sidebar-content">
         <div id="sidebar">
-
-
-            <!-- Logo -->
-
-            <img src="<%= request.getContextPath() %>/images/logo/MyjobLogoWhite.png" class="h-40 w-30">
-
-
-
-
+            <div class="logo">
+                <h2 class="mb-0 text-2xl">MyJob.ma</h2>
+            </div>
             <ul class="side-menu">
                 <li>
                     <a href="<%= request.getContextPath() %>/views/recruteur/Profile.jsp" class="active">
