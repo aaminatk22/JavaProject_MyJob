@@ -29,4 +29,11 @@ public class CandidatureService {
         return candidatureDAO.findByAnnonce(idAnnonce);
     }
 
+    public Candidature getCandidatureById(int id) {
+        return candidatureDAO.getCandidatureById(id);
+    }
+
+    public void updateCandidature(Candidature candidature) {
+        candidatureDAO.updateCandidature(candidature);
+    }
 }

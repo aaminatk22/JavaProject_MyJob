@@ -42,13 +42,13 @@ public class AnnonceController extends HttpServlet {
 
             // Count the number of annonces
             AnnonceDAO annonceDAO = new AnnonceDAO();
-            int annonceCount = annonceDAO.countAnnoncesByRecruiter(userId);
+           // int annonceCount = annonceDAO.countAnnoncesByRecruiter(userId);
 
             // Log the count (optional)
-            System.out.println("Nombre d'annonces : " + annonceCount);
+           // System.out.println("Nombre d'annonces : " + annonceCount);
 
             // Pass the attribute to the JSP
-            request.setAttribute("annonceCount", annonceCount);
+            //request.setAttribute("annonceCount", annonceCount);
 
             // Forward to RecruiterSpace.jsp
             request.getRequestDispatcher("/views/recruteur/RecruiterSpace.jsp").forward(request, response);

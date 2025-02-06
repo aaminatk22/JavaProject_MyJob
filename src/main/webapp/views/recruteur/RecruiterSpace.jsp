@@ -22,7 +22,6 @@
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page with Sidebar</title>
 
     <!-- Include Required CSS -->
     <link rel="stylesheet" href="assets/modules/bootstrap-5.1.3/css/bootstrap.css">
@@ -64,7 +63,7 @@
 
             <ul class="side-menu">
                 <li>
-                    <a href="Profile.jsp" class="active">
+                    <a href="<%= request.getContextPath() %>/views/recruteur/Profile.jsp" class="active">
                         <i class='bx bxs-dashboard icon' ></i> Profile
                     </a>
                 </li>
@@ -81,16 +80,16 @@
                 </li>
 
                 <li>
-                    <a href="<%= request.getContextPath() %>/views/recruteur/annonces.jsp">
+                    <a href="<%= request.getContextPath() %>/views/recruteur/annoncesR.jsp">
                         <i class='bx bx-columns icon' ></i>
                         Annonces
                         <i class='bx bx-chevron-right icon-right' ></i>
                     </a>
                 </li>
                 <li>
-                    <a href="<%= request.getContextPath() %>/views/recruteur/ViewApplications.jsp">
+                    <a href="<%= request.getContextPath() %>/views/recruteur/viewApplications.jsp">
                         <i class='bx bx-columns icon' ></i>
-                        Annonces
+                        Candidatures
                         <i class='bx bx-chevron-right icon-right' ></i>
                     </a>
                 </li>

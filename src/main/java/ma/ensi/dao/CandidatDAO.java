@@ -112,7 +112,7 @@ public class CandidatDAO {
         candidat.setPrenom(rs.getString("prenom"));
         candidat.setAge(rs.getInt("age"));
         candidat.setNomUniversite(rs.getString("nom_universite"));
-        candidat.setNiveauEtude(rs.getString("niveau_etude"));
+
 
         return candidat;
     }
