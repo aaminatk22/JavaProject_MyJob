@@ -2,10 +2,8 @@ package ma.ensi.dao;
 
 import ma.ensi.model.Candidat;
 import ma.ensi.model.Candidature;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,4 +95,67 @@ public class CandidatureDAO {
             e.printStackTrace();  // Handle the exception appropriately
         }
     }
+
+
+    public List<Candidature> findByCandidat(int idCandidat) {
+        List<Candidature> candidatures = new ArrayList<>();
+        String sql = "SELECT * FROM candidature WHERE id_utilisateur = ?";
+
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, idCandidat);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Candidature candidature = new Candidature();
+                candidature.setIdCandidature(resultSet.getInt("id_candidature"));
+                candidature.setIdAnnonce(resultSet.getInt("id_annonce"));
+                candidature.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                candidature.setDateSoumission(resultSet.getDate("date_soumission").toLocalDate());
+                candidature.setStatut(resultSet.getString("statut"));
+
+                candidatures.add(candidature);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return candidatures;
+    }
+
+    public List<Candidature> getAllCandidatures() {
+        List<Candidature> candidatures = new ArrayList<>();
+        try (Connection connection = ConnexionBDD.getConnection()) {  // Auto-close connection
+            String sql = "SELECT * FROM candidature";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Candidature candidature = new Candidature();
+                candidature.setIdCandidature(resultSet.getInt("id_candidature"));
+                candidature.setIdAnnonce(resultSet.getInt("id_annonce"));
+                candidature.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                candidature.setDateSoumission(resultSet.getDate("date_soumission").toLocalDate());
+                candidature.setStatut(resultSet.getString("statut"));
+                candidatures.add(candidature);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching candidatures: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return candidatures;
+    }
+
+
+    // ✅ **Méthode utilitaire pour éviter la répétition du code**
+    private Candidature mapResultSetToCandidature(ResultSet resultSet) throws SQLException {
+        Candidature candidature = new Candidature();
+        candidature.setIdCandidature(resultSet.getInt("id_candidature"));
+        candidature.setIdAnnonce(resultSet.getInt("id_annonce"));
+        candidature.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+        candidature.setDateSoumission(resultSet.getDate("date_soumission").toLocalDate());
+        candidature.setStatut(resultSet.getString("statut"));
+        return candidature;
+    }
+
 }
