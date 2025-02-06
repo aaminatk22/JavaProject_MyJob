@@ -34,6 +34,6 @@ public class CandidatureService {
     }
 
     public void updateCandidature(Candidature candidature) {
-        candidatureDAO.updateCandidature(candidature);
+         candidatureDAO.updateCandidature(candidature);
     }
 }
