@@ -53,4 +53,48 @@ public class CandidatureDAO {
 
         return candidatures;
     }
+
+
+
+    public Candidature getCandidatureById(int id) {
+        Candidature candidature = null;
+        String query = "SELECT * FROM candidature WHERE id_candidature = ?";
+
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);  // Set the candidature ID in the query
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Map the result set to a Candidature object
+                candidature = new Candidature();
+                candidature.setIdCandidature(resultSet.getInt("id_candidature"));
+                candidature.setIdAnnonce(resultSet.getInt("id_annonce"));
+                candidature.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                candidature.setDateSoumission(resultSet.getDate("date_soumission").toLocalDate());
+                candidature.setStatut(resultSet.getString("statut"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle the exception appropriately
+        }
+
+        return candidature;
+    }
+
+    // Method to update the status of a Candidature
+    public void updateCandidature(Candidature candidature) {
+        String query = "UPDATE candidature SET statut = ? WHERE id_candidature = ?";
+
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, candidature.getStatut());  // Set the new status
+            statement.setInt(2, candidature.getIdCandidature());         // Set the candidature ID
+            statement.executeUpdate();  // Execute the update query
+
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle the exception appropriately
+        }
+    }
 }

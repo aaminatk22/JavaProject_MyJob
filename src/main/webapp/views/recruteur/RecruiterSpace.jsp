@@ -78,9 +78,10 @@
                         <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600">Supprimer</button>
                     </form>
                     <!-- View Applications Button -->
-                    <a href="<%= request.getContextPath() %>/views/recruteur/viewApplications.jsp?idAnnonce=<%= annonce.getIdAnnonce() %>" class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                    <a href="<%= request.getContextPath() %>/postuler?idAnnonce=<%= annonce.getIdAnnonce() %>" class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600">
                         Voir les candidatures
                     </a>
+
 
                 </div>
             </li>
