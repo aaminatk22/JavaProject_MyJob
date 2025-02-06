@@ -37,7 +37,8 @@ public class AnnonceService {
     }
 
     public List<Annonce> getAnnoncesByRecruiter(int recruiterId) {
-        return annonceDAO.getAnnoncesByRecruiter(recruiterId);
+        return annonceDAO.getAnnoncesByRecruteurId(recruiterId);
     }
+
 
 }

@@ -53,6 +53,7 @@
     </header>
 
     <!-- Job Listings -->
+    <!-- Job Listings -->
     <div class="bg-white p-4 rounded-lg shadow">
         <h2 class="text-lg font-semibold mb-4">Annonces publiées</h2>
         <ul>
@@ -70,12 +71,16 @@
                     <!-- Update Button -->
                     <button onclick="openUpdateModal(<%= annonce.getIdAnnonce() %>, '<%= annonce.getTitre() %>', '<%= annonce.getTypeAnnonce() %>', '<%= annonce.getDescription() %>')"
                             class="px-3 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">Modifier</button>
+                    <!-- Delete Button -->
                     <form action="<%= request.getContextPath() %>/annonces" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette annonce ?')">
                         <input type="hidden" name="_method" value="delete">
                         <input type="hidden" name="id" value="<%= annonce.getIdAnnonce() %>">
                         <button type="submit" class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600">Supprimer</button>
                     </form>
-
+                    <!-- View Applications Button -->
+                    <a href="<%= request.getContextPath() %>/views/recruteur/viewApplications.jsp?idAnnonce=<%= annonce.getIdAnnonce() %>" class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                        Voir les candidatures
+                    </a>
 
                 </div>
             </li>
@@ -89,6 +94,7 @@
             %>
         </ul>
     </div>
+
 </div>
 
 

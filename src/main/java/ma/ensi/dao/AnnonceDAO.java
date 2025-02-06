@@ -126,24 +126,22 @@ public class AnnonceDAO {
     }
 
 
-
-    public List<Annonce> getAnnoncesByRecruiter(int recruiterId) {
+    public List<Annonce> getAnnoncesByRecruteurId(int idUtilisateur) {
         List<Annonce> annonces = new ArrayList<>();
-        String sql = "SELECT * FROM annonce WHERE id_utilisateur = ?";
+        String query = "SELECT * FROM annonce WHERE id_utilisateur = ?";
 
         try (Connection connection = ConnexionBDD.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, recruiterId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            statement.setInt(1, idUtilisateur);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 Annonce annonce = new Annonce();
                 annonce.setIdAnnonce(resultSet.getInt("id_annonce"));
                 annonce.setTitre(resultSet.getString("titre"));
-                annonce.setTypeAnnonce(resultSet.getString("type_annonce"));
                 annonce.setDescription(resultSet.getString("description"));
-                annonce.setDatePublication(resultSet.getString("date_publication"));
+                annonce.setDatePublication(String.valueOf(resultSet.getDate("date_publication")));
                 annonce.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
                 annonces.add(annonce);
             }
@@ -153,5 +151,4 @@ public class AnnonceDAO {
 
         return annonces;
     }
-
 }

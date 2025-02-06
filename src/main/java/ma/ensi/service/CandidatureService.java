@@ -4,6 +4,8 @@ import ma.ensi.dao.CandidatureDAO;
 import ma.ensi.model.Candidature;
 
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 
 public class CandidatureService {
     private final CandidatureDAO candidatureDAO = new CandidatureDAO();
@@ -22,4 +24,9 @@ public class CandidatureService {
         // Appeler le DAO pour sauvegarder la candidature
         candidatureDAO.saveCandidature(candidature);
     }
+
+    public List<Candidature> getCandidaturesByAnnonce(int idAnnonce) {
+        return candidatureDAO.findByAnnonce(idAnnonce);
+    }
+
 }
