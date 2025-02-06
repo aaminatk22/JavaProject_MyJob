@@ -9,10 +9,12 @@
 	--default-bg: #edf2f7;
 	--default-color: #5A5C69;
 }
-html, body {
-	height: 200%; /* Makes sure there's room to scroll */
-	overflow-y: scroll; /* Always show vertical scrollbar */
-}
+
+	html {
+		overflow-x: hidden;
+	}
+
+
 
 /** 2. Default CSS  **/
 body {    
@@ -459,23 +461,24 @@ a.dropdown-item{
 	z-index: 9998;
 }
 
+/** 3.3 Scroll **/
+::-webkit-scrollbar {
+	width: 6px; /* Set a visible width */
+}
 
-/** 3.3 Scroll**/
-  ::-webkit-scrollbar {
-	width: 0px;
-  }
-  
-  ::-webkit-scrollbar-track {
-	background: #f1f1f1;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-	background: #888;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-track {
+	background: #f1f1f1; /* Track background */
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888; /* Scrollbar color */
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
 	background: #555;
-  }
+}
+
 /** 3.4 Card**/
 .card-description{
 	color: #7c8db5!important;

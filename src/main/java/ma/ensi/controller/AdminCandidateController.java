@@ -20,9 +20,9 @@ public class AdminCandidateController {
     }
 
     // Delete a candidate by ID
-    public void deleteCandidate(int id) {
+    public void deleteCandidate(int id_utilisateur) {
         try {
-            candidatService.deleteCandidat(id);
+            candidatService.deleteCandidat(id_utilisateur);
             System.out.println("Candidate deleted successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,9 +42,9 @@ public class AdminCandidateController {
     }
 
     // Access a candidate's portfolio
-    public void viewCandidatePortfolio(int candidateId) {
+    public void viewCandidatePortfolio(int id_utilisateur) {
         try {
-            Candidat candidat = candidatService.getCandidatById(candidateId);
+            Candidat candidat = candidatService.getCandidatById(id_utilisateur);
             if (candidat != null) {
                 candidat.consulterPortfolio(); // Call the portfolio method
             } else {

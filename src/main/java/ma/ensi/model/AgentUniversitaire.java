@@ -1,24 +1,33 @@
 package ma.ensi.model;
 
 public class AgentUniversitaire extends Utilisateur {
-    private String universite;
+    private String universite; // Updated to match database schema
 
-    // Constructeur par défaut
-    public AgentUniversitaire(int id, String nomUtilisateur, String email, String motDePasse, String nom, String prenom, String nomUniversite) {
-        super();
+    // Default Constructor
+    public AgentUniversitaire(String nom_utilisateur, String email, String mot_de_passe, String nom, String prenom, String nom_universite, String nom_etab, String type_etab) {
+        super(); // Calls the parent (Utilisateur) default constructor
     }
 
-    // Constructeur avec paramètres
-    public AgentUniversitaire(String nomUtilisateur, String email, String motDePasse, String nom, String prenom, String universite) {
-        super.setNomUtilisateur(nomUtilisateur);
+    // Constructor with parameters
+    public AgentUniversitaire(String nom_utilisateur, String email, String mot_de_passe,
+                              String nom, String prenom, String universite) {
+        super(); // Calls the parent (Utilisateur) constructor
+        super.setNom_utilisateur(nom_utilisateur); // Initializing parent class fields
         super.setEmail(email);
-        super.setMotDePasse(motDePasse);
+        super.setMot_de_passe(mot_de_passe);
         super.setNom(nom);
         super.setPrenom(prenom);
         this.universite = universite;
     }
 
-    // Getters et Setters
+    // Constructor with id
+    public AgentUniversitaire(int id_utilisateur, String nom_utilisateur, String email, String mot_de_passe,
+                              String nom, String prenom, String universite) {
+        this(nom_utilisateur, email, mot_de_passe, nom, prenom, universite);
+        super.setId_utilisateur(id_utilisateur); // Setting the id for the parent class
+    }
+
+    // Getter & Setter for universite
     public String getUniversite() {
         return universite;
     }

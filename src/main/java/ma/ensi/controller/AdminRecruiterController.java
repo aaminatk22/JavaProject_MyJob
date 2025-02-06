@@ -3,7 +3,6 @@ package ma.ensi.controller;
 import ma.ensi.model.Recruteur;
 import ma.ensi.service.RecruteurService;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class AdminRecruiterController {
@@ -13,18 +12,18 @@ public class AdminRecruiterController {
     public List<Recruteur> getAllRecruiters() {
         try {
             return recruteurService.getAllRecruteurs();
-        } catch (SQLException e) {
+        } catch (Exception e) { // Catch more general exceptions
             e.printStackTrace();
             throw new RuntimeException("Failed to fetch recruiters.");
         }
     }
 
     // Delete a recruiter by ID
-    public void deleteRecruiter(int id) {
+    public void deleteRecruiter(int id_utilisateur) {
         try {
-            recruteurService.deleteRecruteur(id);
+            recruteurService.deleteRecruteur(id_utilisateur);
             System.out.println("Recruiter deleted successfully.");
-        } catch (SQLException e) {
+        } catch (Exception e) { // Catch more general exceptions
             e.printStackTrace();
             throw new RuntimeException("Failed to delete recruiter.");
         }
@@ -35,18 +34,18 @@ public class AdminRecruiterController {
         try {
             recruteurService.updateRecruteur(recruteur);
             System.out.println("Recruiter updated successfully.");
-        } catch (SQLException e) {
+        } catch (Exception e) { // Catch more general exceptions
             e.printStackTrace();
             throw new RuntimeException("Failed to update recruiter.");
         }
     }
 
     // Delete a job posting
-    public void deleteJobPost(int jobId) {
+    public void deleteJobPost(int id_annonce) {
         try {
-            recruteurService.deleteJobPost(jobId);
+            recruteurService.deleteJobPost(id_annonce);
             System.out.println("Job post deleted successfully.");
-        } catch (SQLException e) {
+        } catch (Exception e) { // Catch more general exceptions
             e.printStackTrace();
             throw new RuntimeException("Failed to delete job post.");
         }

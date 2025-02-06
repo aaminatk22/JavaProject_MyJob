@@ -1,68 +1,33 @@
 package ma.ensi.controller;
 
-import ma.ensi.model.Recruteur;
 import ma.ensi.service.RecruteurService;
+import ma.ensi.model.Recruteur;
 
-import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
-public class RecruteurController {
+@WebServlet("/recruteurs")
+public class RecruteurController extends HttpServlet {
     private final RecruteurService recruteurService = new RecruteurService();
 
-    // Add a new recruiter
-    public void addRecruteur(String nomUtilisateur, String email, String motDePasse, String nom, String prenom, String entreprise) {
-        Recruteur recruteur = new Recruteur(nomUtilisateur, email, motDePasse, nom, prenom, entreprise);
-        try {
-            recruteurService.saveRecruteur(recruteur);
-            System.out.println("Recruteur ajouté avec succès !");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de l'ajout du recruteur : " + e.getMessage());
-        }
-    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Recruteur> recruteurs = recruteurService.getAllRecruteurs();
 
-    // Get recruiter by ID
-    public void getRecruteurById(int id) {
-        try {
-            Recruteur recruteur = recruteurService.getRecruteurById(id);
-            if (recruteur != null) {
-                System.out.println("Recruteur trouvé : " + recruteur);
-            } else {
-                System.out.println("Aucun recruteur trouvé avec l'ID : " + id);
-            }
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération du recruteur : " + e.getMessage());
-        }
-    }
+        if (recruteurs != null) {
 
-    // Get all recruiters
-    public void getAllRecruteurs() {
-        try {
-            List<Recruteur> recruteurs = recruteurService.getAllRecruteurs();
-            System.out.println("Liste des recruteurs : ");
-            recruteurs.forEach(System.out::println);
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération des recruteurs : " + e.getMessage());
-        }
-    }
+            request.getSession().setAttribute("recruteurs", recruteurs);
 
-    // Update a recruiter's information
-    public void updateRecruteur(int id, String nomUtilisateur, String email, String motDePasse, String nom, String prenom, String entreprise) {
-        Recruteur recruteur = new Recruteur(id, nomUtilisateur, email, motDePasse, nom, prenom, entreprise);
-        try {
-            recruteurService.updateRecruteur(recruteur);
-            System.out.println("Recruteur mis à jour avec succès !");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la mise à jour du recruteur : " + e.getMessage());
-        }
-    }
+            response.sendRedirect(request.getContextPath() + "/views/admin/GestionRecrutement/GestionDesProfile.jsp");
+        } else {
 
-    // Delete a recruiter by ID
-    public void deleteRecruteur(int id) {
-        try {
-            recruteurService.deleteRecruteur(id);
-            System.out.println("Recruteur supprimé avec succès !");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la suppression du recruteur : " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve recruiters.");
         }
     }
 }

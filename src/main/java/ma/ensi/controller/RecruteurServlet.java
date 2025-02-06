@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/RecruteurServlet")
+@WebServlet("/recruteurs-Servlet")
 public class RecruteurServlet extends HttpServlet {
     private RecruteurService recruteurService;
 
@@ -22,63 +21,42 @@ public class RecruteurServlet extends HttpServlet {
     }
 
     // Récupérer la liste des recruteurs
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            List<Recruteur> recruteurs = recruteurService.getAllRecruteurs();
-            request.setAttribute("recruteurs", recruteurs);
-            request.getRequestDispatcher("views/admin/gestionRecruteur.jsp").forward(request, response);
-        } catch (SQLException e) {
-            throw new ServletException("Erreur lors de la récupération des recruteurs", e);
-        }
+        List<Recruteur> recruteurs = recruteurService.getAllRecruteurs();
+        request.setAttribute("recruteurs", recruteurs);
+        request.getRequestDispatcher("/views/admin/gestionRecruteur.jsp").forward(request, response);
+
+
     }
 
-    // Ajouter un recruteur
+    // Ajouter ou modifier un recruteur
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String nomUtilisateur = request.getParameter("nomUtilisateur");
-            String email = request.getParameter("email");
-            String motDePasse = request.getParameter("motDePasse");
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String entreprise = request.getParameter("entreprise");
+        int id_utilisateur = request.getParameter("idUtilisateur") != null ? Integer.parseInt(request.getParameter("idUtilisateur")) : 0;
+        String nom_utilisateur = request.getParameter("nomUtilisateur");
+        String email = request.getParameter("email");
+        String mot_de_passe = request.getParameter("motDePasse");
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
+        String entreprise = request.getParameter("entreprise");
 
-            Recruteur recruteur = new Recruteur(0, nomUtilisateur, email, motDePasse, nom, prenom, entreprise);
+        Recruteur recruteur = new Recruteur(id_utilisateur, nom_utilisateur, email, mot_de_passe, "recruteur", nom, prenom);
+
+        if (id_utilisateur == 0) {
             recruteurService.saveRecruteur(recruteur);
-
-            response.sendRedirect("RecruteurServlet");
-        } catch (SQLException e) {
-            throw new ServletException("Erreur lors de l'ajout du recruteur", e);
-        }
-    }
-
-    // Modifier un recruteur
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String nomUtilisateur = request.getParameter("nomUtilisateur");
-            String email = request.getParameter("email");
-            String motDePasse = request.getParameter("motDePasse");
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String entreprise = request.getParameter("entreprise");
-
-            Recruteur recruteur = new Recruteur(id, nomUtilisateur, email, motDePasse, nom, prenom, entreprise);
+        } else {
             recruteurService.updateRecruteur(recruteur);
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (SQLException e) {
-            throw new ServletException("Erreur lors de la mise à jour du recruteur", e);
         }
+
+        response.sendRedirect("/recruteurs");
     }
 
     // Supprimer un recruteur
+    @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
-            recruteurService.deleteRecruteur(id);
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (SQLException e) {
-            throw new ServletException("Erreur lors de la suppression du recruteur", e);
-        }
+        int id = Integer.parseInt(request.getParameter("id_utilisateur"));
+        recruteurService.deleteRecruteur(id);
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }
