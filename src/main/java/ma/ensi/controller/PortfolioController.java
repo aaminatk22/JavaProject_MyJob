@@ -2,6 +2,7 @@ package ma.ensi.controller;
 
 import ma.ensi.model.*;
 import ma.ensi.service.PortfolioService;
+import ma.ensi.service.VerificationService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,6 +16,7 @@ import java.util.List;
 @MultipartConfig
 public class PortfolioController extends HttpServlet {
     private final PortfolioService portfolioService = new PortfolioService();
+    private final VerificationService verificationService = new VerificationService();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -83,8 +85,32 @@ public class PortfolioController extends HttpServlet {
                 }
             }
 
-            // Appel du service pour sauvegarder les données
-            portfolioService.createPortfolio(portfolio, competences, experiences, projets);
+            // Récupération des documents (nouveau)
+            List<Document> documents = new ArrayList<>();
+            Part filePart = request.getPart("documents[][file]"); // File input
+            String documentType = request.getParameter("documents[][type]");
+
+            if (filePart != null && documentType != null) {
+                Document document = new Document();
+                document.setType(documentType);
+                documents.add(document);
+            }
+
+            // Process the portfolio creation
+            portfolioService.createPortfolio(portfolio, competences, experiences, projets, documents);
+
+            // Handle verification request (if available)
+            String university = request.getParameter("university");
+            String verificationDocumentType = request.getParameter("verificationDocumentType");
+
+            if (university != null && verificationDocumentType != null) {
+                // Save the verification request
+
+                verificationService.sendVerificationRequest(userId, university, verificationDocumentType);
+
+                // Set a success message for the user
+                request.setAttribute("verificationMessage", "Verification request sent successfully!");
+            }
 
             response.sendRedirect(request.getContextPath() + "/annonces");
         } catch (Exception e) {

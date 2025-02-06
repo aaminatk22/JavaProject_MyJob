@@ -74,8 +74,28 @@
                 <input type="file" name="documents[][file]" class="border rounded-lg p-2">
                 <input type="text" name="documents[][type]" placeholder="Document Type (e.g., CV, Certificate)" class="border rounded-lg p-2">
             </div>
+
+            <!-- Verification Request Section -->
+            <div>
+                <label class="block font-bold mb-2">Send Verification Request</label>
+                <div id="verificationRequest" class="space-y-2">
+                    <!-- University Name -->
+                    <input type="text" name="university" placeholder="University Name" class="w-full border rounded-lg p-2" required>
+
+                    <!-- Document Type -->
+                    <input type="text" name="verificationDocumentType" placeholder="Document Type (e.g., CV, Certificate)" class="w-full border rounded-lg p-2" required>
+
+                    <!-- Submit Button for Verification Request -->
+                    <button type="submit" name="submitVerificationRequest" class="w-full px-4 py-2 bg-yellow-500 text-white rounded-lg">
+                        Demande de Verification
+                    </button>
+                </div>
+            </div>
             <button type="button" id="addDocument" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg">Add Document</button>
         </div>
+
+
+
 
         <!-- Submit Button -->
         <div>
