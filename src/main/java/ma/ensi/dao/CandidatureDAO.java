@@ -1,15 +1,19 @@
 package ma.ensi.dao;
 
+import ma.ensi.model.Candidat;
 import ma.ensi.model.Candidature;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import ma.ensi.dao.ConnexionBDD;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CandidatureDAO {
+
+
     public void saveCandidature(Candidature candidature) throws SQLException {
-        String query = "INSERT INTO candidature (id_annonce, id_utilisateur, date_soumission, statut, message_candidat) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO candidature (id_annonce, id_utilisateur, date_soumission, statut) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = ConnexionBDD.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -17,72 +21,36 @@ public class CandidatureDAO {
             ps.setInt(2, candidature.getIdUtilisateur());
             ps.setObject(3, candidature.getDateSoumission());
             ps.setString(4, candidature.getStatut());
-            ps.setString(5, candidature.getMessageCandidat());
+
 
             ps.executeUpdate();
         }
     }
 
+    public List<Candidature> findByAnnonce(int idAnnonce) {
+        List<Candidature> candidatures = new ArrayList<>();
 
-        // Compter le nombre total de candidatures pour un recruteur
-        public int countTotalCandidaturesByRecruiter(int idUtilisateur) {
-            int count = 0;
-            try (Connection connection = ConnexionBDD.getConnection()) {
-                String sql = "SELECT COUNT(*) AS total FROM candidature c " +
-                        "JOIN annonce a ON c.id_annonce = a.id_annonce " +
-                        "WHERE a.id_utilisateur = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, idUtilisateur);
-                ResultSet resultSet = preparedStatement.executeQuery();
+        String sql = "SELECT * FROM candidature WHERE id_annonce = ?";
 
-                if (resultSet.next()) {
-                    count = resultSet.getInt("total");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, idAnnonce);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Candidature candidature = new Candidature();
+                candidature.setIdCandidature(resultSet.getInt("id_candidature"));
+                candidature.setIdAnnonce(resultSet.getInt("id_annonce"));
+                candidature.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
+                candidature.setDateSoumission(resultSet.getDate("date_soumission").toLocalDate());
+                candidature.setStatut(resultSet.getString("statut"));
+
+                candidatures.add(candidature);
             }
-            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        // Compter le nombre de candidatures acceptées
-        public int countAcceptedCandidaturesByRecruiter(int idUtilisateur) {
-            int count = 0;
-            try (Connection connection = ConnexionBDD.getConnection()) {
-                String sql = "SELECT COUNT(*) AS total FROM candidature c " +
-                        "JOIN annonce a ON c.id_annonce = a.id_annonce " +
-                        "WHERE a.id_utilisateur = ? AND c.status = 'accepted'";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, idUtilisateur);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-                    count = resultSet.getInt("total");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return count;
-        }
-
-        // Compter le nombre de candidatures rejetées
-        public int countRejectedCandidaturesByRecruiter(int idUtilisateur) {
-            int count = 0;
-            try (Connection connection = ConnexionBDD.getConnection()) {
-                String sql = "SELECT COUNT(*) AS total FROM candidature c " +
-                        "JOIN annonce a ON c.id_annonce = a.id_annonce " +
-                        "WHERE a.id_utilisateur = ? AND c.status = 'rejected'";
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, idUtilisateur);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-                    count = resultSet.getInt("total");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return count;
-        }
+        return candidatures;
     }
-
-
+}

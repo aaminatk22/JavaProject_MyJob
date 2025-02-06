@@ -1,5 +1,7 @@
 package ma.ensi.model;
 
+import java.util.List;
+
 public class Utilisateur {
     private int idUtilisateur;
     private String nomUtilisateur;
@@ -78,4 +80,6 @@ public class Utilisateur {
     public void setPassword(String password) {
         this.motDePasse = password;
     }
+
+
 }

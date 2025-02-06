@@ -8,9 +8,13 @@ public class Candidature {
     private int idUtilisateur;
     private LocalDate dateSoumission;
     private String statut;
-    private String messageCandidat;
 
-    // Getters et Setters
+    private Candidat candidat; // Add this field
+
+    // Getters and Setters
+    public int getIdCandidature() {
+        return idCandidature;
+    }
 
     public void setIdCandidature(int idCandidature) {
         this.idCandidature = idCandidature;
@@ -48,12 +52,13 @@ public class Candidature {
         this.statut = statut;
     }
 
-    public String getMessageCandidat() {
-        return messageCandidat;
+
+
+    public Candidat getCandidat() {
+        return candidat;
     }
 
-    public void setMessageCandidat(String messageCandidat) {
-        this.messageCandidat = messageCandidat;
+    public void setCandidat(Candidat candidat) {
+        this.candidat = candidat;
     }
-    
 }

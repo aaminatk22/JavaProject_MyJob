@@ -62,4 +62,5 @@ public class Candidat extends Utilisateur {
         System.out.println("Niveau d'étude: " + this.niveauEtude);
         System.out.println("Téléphone: " + this.getTel());
     }
+
 }
