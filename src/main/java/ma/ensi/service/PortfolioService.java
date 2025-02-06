@@ -9,7 +9,7 @@ public class PortfolioService {
     private final PortfolioDAO portfolioDAO = new PortfolioDAO();
 
     public void createPortfolio(Portfolio portfolio, List<Competence> competences,
-                                List<Experience> experiences, List<Projet> projets) {
+                                List<Experience> experiences, List<Projet> projets, List<Document> documents) {
         // Création du portfolio
         int portfolioId = portfolioDAO.createPortfolio(portfolio);
 
