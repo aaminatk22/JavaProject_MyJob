@@ -140,7 +140,8 @@ public class AnnonceDAO {
                 Annonce annonce = new Annonce();
                 annonce.setIdAnnonce(resultSet.getInt("id_annonce"));
                 annonce.setTitre(resultSet.getString("titre"));
-                annonce.setDescription(resultSet.getString("description"));
+                annonce.setDescription(resultSet.getString("type_annonce"));
+                annonce.setTypeAnnonce(resultSet.getString("description"));
                 annonce.setDatePublication(String.valueOf(resultSet.getDate("date_publication")));
                 annonce.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
                 annonces.add(annonce);
