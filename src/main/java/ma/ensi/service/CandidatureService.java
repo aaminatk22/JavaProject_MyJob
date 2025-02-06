@@ -1,6 +1,7 @@
 package ma.ensi.service;
 
 import ma.ensi.dao.CandidatureDAO;
+import ma.ensi.model.Candidat;
 import ma.ensi.model.Candidature;
 
 import java.sql.SQLException;
@@ -36,4 +37,13 @@ public class CandidatureService {
     public void updateCandidature(Candidature candidature) {
          candidatureDAO.updateCandidature(candidature);
     }
+
+    public List<Candidature> getAllCandidatures (){
+        return candidatureDAO.getAllCandidatures();
+    }
+
+    public List<Candidature> findByCandidat (int id) {
+        return candidatureDAO.findByCandidat(id);
+    }
+
 }
