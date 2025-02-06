@@ -22,4 +22,15 @@ public class CandidatureService {
         // Appeler le DAO pour sauvegarder la candidature
         candidatureDAO.saveCandidature(candidature);
     }
+    public int getTotalCandidaturesByRecruiter(int idUtilisateur) {
+        return candidatureDAO.countTotalCandidaturesByRecruiter(idUtilisateur);
+    }
+
+    public int getAcceptedCandidaturesByRecruiter(int idUtilisateur) {
+        return candidatureDAO.countAcceptedCandidaturesByRecruiter(idUtilisateur);
+    }
+
+    public int getRejectedCandidaturesByRecruiter(int idUtilisateur) {
+        return candidatureDAO.countRejectedCandidaturesByRecruiter(idUtilisateur);
+    }
 }

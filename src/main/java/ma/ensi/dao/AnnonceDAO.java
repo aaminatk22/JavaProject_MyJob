@@ -154,4 +154,28 @@ public class AnnonceDAO {
         return annonces;
     }
 
+
+    public int countAnnoncesByRecruiter(int idUtilisateur) {
+        int count = 0;
+        try (Connection connection = ConnexionBDD.getConnection()) {
+            String sql = "SELECT COUNT(*) AS total FROM annonce WHERE id_utilisateur = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idUtilisateur);
+
+            System.out.println("Executing SQL: SELECT COUNT(*) FROM annonce WHERE id_utilisateur = " + idUtilisateur);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                count = resultSet.getInt("total");
+                System.out.println("Count retrieved: " + count);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+
+
 }

@@ -13,6 +13,9 @@ public class ProfileService {
     private final ExperienceDAO experienceDAO = new ExperienceDAO();
     private final DocumentDAO documentDAO = new DocumentDAO();
 
+
+
+
     /**
      * Update personal information, including the telephone number.
      *
@@ -95,4 +98,7 @@ public class ProfileService {
             throw new RuntimeException("Error occurred while creating profile");
         }
     }
+
+
+
 }

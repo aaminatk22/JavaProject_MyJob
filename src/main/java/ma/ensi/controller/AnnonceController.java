@@ -1,5 +1,6 @@
 package ma.ensi.controller;
 
+import ma.ensi.dao.AnnonceDAO;
 import ma.ensi.model.Annonce;
 import ma.ensi.service.AnnonceService;
 
@@ -15,7 +16,6 @@ import java.util.List;
 @WebServlet("/annonces")
 public class AnnonceController extends HttpServlet {
     private final AnnonceService annonceService = new AnnonceService();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,11 +39,25 @@ public class AnnonceController extends HttpServlet {
         } else if ("recruteur".equalsIgnoreCase(role)) {
             annonces = annonceService.getAnnoncesByRecruiter(userId);
             session.setAttribute("annonces", annonces);
-            response.sendRedirect(request.getContextPath() + "/views/recruteur/RecruiterSpace.jsp");
+
+            // Count the number of annonces
+            AnnonceDAO annonceDAO = new AnnonceDAO();
+            int annonceCount = annonceDAO.countAnnoncesByRecruiter(userId);
+
+            // Log the count (optional)
+            System.out.println("Nombre d'annonces : " + annonceCount);
+
+            // Pass the attribute to the JSP
+            request.setAttribute("annonceCount", annonceCount);
+
+            // Forward to RecruiterSpace.jsp
+            request.getRequestDispatcher("/views/recruteur/RecruiterSpace.jsp").forward(request, response);
         } else {
             response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
         }
     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

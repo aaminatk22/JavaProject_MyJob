@@ -55,4 +55,6 @@ public class Recruteur extends Utilisateur {
     public void setAnnonces(List<Annonce> annonces) {
         this.annonces = (annonces != null) ? annonces : new ArrayList<>();
     }
+
+
 }

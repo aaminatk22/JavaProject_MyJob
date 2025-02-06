@@ -33,7 +33,7 @@ public class RecruteurDAO {
     public Recruteur getRecruteurById(int id) {
         Recruteur recruteur = null;
         try (Connection connection = ConnexionBDD.getConnection()) {
-            String sql = "SELECT * FROM recruteur WHERE id = ?";
+            String sql = "SELECT * FROM recruteur WHERE idUtilisateur = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
