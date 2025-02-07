@@ -31,6 +31,8 @@ public class Recruteur extends Utilisateur {
         this.annonces = (annonces != null) ? annonces : new ArrayList<>();
     }
 
+
+
     // Getters and Setters
     public String getEntreprise() {
         return entreprise;
