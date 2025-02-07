@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/components/Navbar.jsp" value="file://$PROJECT_DIR$/src/main/webapp/components" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/candidat/CandidatProfil.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/candidat" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/candidat/CreerProfil.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/candidat" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/Profile.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/RecruiterDashboard.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/RecruiterSpace.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/candidateDetails.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/viewApplications.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
+      </map>
+    </option>
+  </component>
+</project>
