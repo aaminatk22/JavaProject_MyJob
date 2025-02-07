@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/candidat")
+@WebServlet("/candidat-amina")
 public class CandidatController extends HttpServlet {
     private CandidatService candidatService = new CandidatService();
 
