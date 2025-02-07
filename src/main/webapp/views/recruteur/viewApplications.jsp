@@ -101,10 +101,13 @@
                 </div>
 
                 <!-- Button to view candidate details -->
-                <a href="<%= request.getContextPath() + "/recruteur/details?id=" + candidature.getIdCandidature() %>"
-                   class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                <a
+                        href="<%= request.getContextPath() %>candidat/details?idCandidature=<%= candidature.getIdCandidature() %>"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                     Voir Détails
                 </a>
+
+
 
                 <!-- Form to accept the candidature -->
                 <form id="acceptForm" action="<%= request.getContextPath() + "/postuler" %>" method="POST" class="inline">
