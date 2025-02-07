@@ -42,8 +42,14 @@ public class CandidatureService {
         return candidatureDAO.getAllCandidatures();
     }
 
-    public List<Candidature> findByCandidat (int id) {
-        return candidatureDAO.findByCandidat(id);
+
+
+    public List<Candidature> findByCandidat(int id) {
+        List<Candidature> candidatures = candidatureDAO.findByCandidat(id);
+
+        // ✅ Debugging: Print the fetched candidatures
+        System.out.println("DEBUG: Service - Nombre de candidatures récupérées: " + candidatures.size());
+        return candidatures;
     }
 
 }

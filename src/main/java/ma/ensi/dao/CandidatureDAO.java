@@ -101,27 +101,33 @@ public class CandidatureDAO {
         List<Candidature> candidatures = new ArrayList<>();
         String sql = "SELECT * FROM candidature WHERE id_utilisateur = ?";
 
-        try (Connection connection = ConnexionBDD.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, idCandidat);
-            ResultSet resultSet = statement.executeQuery();
+        try (Connection conn = ConnexionBDD.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idCandidat);
+            ResultSet rs = stmt.executeQuery();
 
-            while (resultSet.next()) {
+            while (rs.next()) {
                 Candidature candidature = new Candidature();
-                candidature.setIdCandidature(resultSet.getInt("id_candidature"));
-                candidature.setIdAnnonce(resultSet.getInt("id_annonce"));
-                candidature.setIdUtilisateur(resultSet.getInt("id_utilisateur"));
-                candidature.setDateSoumission(resultSet.getDate("date_soumission").toLocalDate());
-                candidature.setStatut(resultSet.getString("statut"));
+                candidature.setIdCandidature(rs.getInt("id_candidature"));
+                candidature.setIdAnnonce(rs.getInt("id_annonce"));
+                candidature.setIdUtilisateur(rs.getInt("id_utilisateur"));
+                candidature.setDateSoumission(rs.getDate("date_soumission").toLocalDate());
+                candidature.setStatut(rs.getString("statut"));
 
                 candidatures.add(candidature);
             }
+
+            // Print number of candidatures fetched
+            System.out.println("DEBUG: DAO - Fetched " + candidatures.size() + " candidatures for user ID: " + idCandidat);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return candidatures;
     }
+
+
+
+
 
     public List<Candidature> getAllCandidatures() {
         List<Candidature> candidatures = new ArrayList<>();
