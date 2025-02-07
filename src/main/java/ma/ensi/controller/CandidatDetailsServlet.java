@@ -1,8 +1,13 @@
 package ma.ensi.controller;
 
+import ma.ensi.dao.PortfolioDAO;
 import ma.ensi.model.Candidat;
 import ma.ensi.model.Candidature;
 import ma.ensi.model.Portfolio;
+import ma.ensi.model.Competence;
+import ma.ensi.model.Experience;
+import ma.ensi.model.Projet;
+import ma.ensi.model.Document;
 import ma.ensi.service.CandidatService;
 import ma.ensi.service.CandidatureService;
 import ma.ensi.service.PortfolioService;
@@ -13,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/candidat/details")
 public class CandidatDetailsServlet extends HttpServlet {
@@ -21,10 +27,10 @@ public class CandidatDetailsServlet extends HttpServlet {
     private final CandidatureService candidatureService = new CandidatureService();
     private final CandidatService candidatService = new CandidatService();
     private final PortfolioService portfolioService = new PortfolioService();
+    private final PortfolioDAO portfolioDAO = new PortfolioDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupérer l'ID de la candidature depuis les paramètres
         String idCandidatureParam = request.getParameter("idCandidature");
 
         if (idCandidatureParam == null || idCandidatureParam.isEmpty()) {
@@ -34,10 +40,7 @@ public class CandidatDetailsServlet extends HttpServlet {
         }
 
         try {
-            // Convertir l'ID de la candidature en entier
             int idCandidature = Integer.parseInt(idCandidatureParam);
-
-            // Récupérer la candidature correspondante
             Candidature candidature = candidatureService.getCandidatureById(idCandidature);
 
             if (candidature == null) {
@@ -46,23 +49,30 @@ public class CandidatDetailsServlet extends HttpServlet {
                 return;
             }
 
-            // Récupérer les informations du candidat lié à cette candidature
             Candidat candidat = candidatService.getCandidatById(candidature.getIdUtilisateur());
 
             if (candidat == null) {
-                request.setAttribute("error", "Candidat introuvable pour cette candidature.");
+                request.setAttribute("error", "Candidat introuvable.");
                 request.getRequestDispatcher("/views/recruteur/viewApplications.jsp").forward(request, response);
                 return;
             }
 
-            // Récupérer le portfolio du candidat (si disponible)
             Portfolio portfolio = portfolioService.getPortfolioByUserId(candidat.getIdUtilisateur());
 
-            // Ajouter les informations du candidat et son portfolio à la requête
+            // Fetch additional portfolio details
+            List<Competence> competences = portfolio != null ? portfolio.getCompetences() : null;
+            List<Experience> experiences = portfolio != null ? portfolio.getExperiences() : null;
+            List<Projet> projets = portfolio != null ? portfolio.getProjets() : null;
+            List<Document> documents = portfolio != null ? portfolioDAO.getDocumentsByPortfolioId(portfolio.getIdPortfolio()) : null;
+
+            // Send data to the JSP page
             request.setAttribute("candidat", candidat);
             request.setAttribute("portfolio", portfolio);
+            request.setAttribute("competences", competences);
+            request.setAttribute("experiences", experiences);
+            request.setAttribute("projets", projets);
+            request.setAttribute("documents", documents);
 
-            // Rediriger vers la page des détails du candidat
             request.getRequestDispatcher("/views/recruteur/candidatDetails.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {

@@ -1,5 +1,6 @@
 package ma.ensi.service;
 
+import ma.ensi.dao.DocumentDAO;
 import ma.ensi.dao.PortfolioDAO;
 import ma.ensi.model.*;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 public class PortfolioService {
     private final PortfolioDAO portfolioDAO = new PortfolioDAO();
+    private final DocumentDAO documentDAO = new DocumentDAO();
 
     public void createPortfolio(Portfolio portfolio, List<Competence> competences,
                                 List<Experience> experiences, List<Projet> projets, List<Document> documents) {
@@ -32,9 +34,15 @@ public class PortfolioService {
         }
     }
 
-    public Portfolio getPortfolioByUserId(int idUtilisateur) {
-        PortfolioDAO portfolioDAO = new PortfolioDAO(); // Create an instance of PortfolioDAO
-        return portfolioDAO.getPortfolioByUserId(idUtilisateur); // Call the method on the instance
-    }
+    public Portfolio getPortfolioByUserId(int userId) {
+        Portfolio portfolio = portfolioDAO.getPortfolioByUserId(userId);
 
+        if (portfolio != null) {
+            // Retrieve and set documents for the portfolio
+            List<Document> documents = portfolioDAO.getDocumentsByPortfolioId(portfolio.getIdPortfolio());
+            portfolio.setDocuments(documents);
+        }
+
+        return portfolio;
+    }
 }

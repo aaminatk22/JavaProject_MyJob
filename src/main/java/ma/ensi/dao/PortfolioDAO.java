@@ -70,25 +70,30 @@ public class PortfolioDAO {
     public Portfolio getPortfolioByUserId(int userId) {
         String sql = "SELECT * FROM portfolio WHERE id_utilisateur = ?";
         Portfolio portfolio = null;
+
         try (Connection connection = ConnexionBDD.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 int portfolioId = resultSet.getInt("id_portfolio");
                 String description = resultSet.getString("description");
-                portfolio = new Portfolio(portfolioId, userId, description, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                portfolio = new Portfolio(portfolioId, userId, description, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
-                // Retrieve related competences, experiences, and projects
+                // Retrieve related competences, experiences, projects, and documents
                 portfolio.setCompetences(getCompetencesByPortfolioId(portfolioId));
                 portfolio.setExperiences(getExperiencesByPortfolioId(portfolioId));
                 portfolio.setProjets(getProjetsByPortfolioId(portfolioId));
+                portfolio.setDocuments(getDocumentsByPortfolioId(portfolioId)); // Set documents
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return portfolio;
     }
+
 
 
     private List<Competence> getCompetencesByPortfolioId(int portfolioId) {
@@ -154,4 +159,30 @@ public class PortfolioDAO {
         }
         return projets;
     }
+
+
+
+    public List<Document> getDocumentsByPortfolioId(int portfolioId) {
+        List<Document> documents = new ArrayList<>();
+        String sql = "SELECT * FROM document WHERE id_portfolio = ?";
+
+        try (Connection connection = ConnexionBDD.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, portfolioId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Document document = new Document();
+                document.setIdPortfolio(resultSet.getInt("id_portfolio"));
+                document.setType(resultSet.getString("type"));
+                document.setFilePath(resultSet.getString("file_path"));
+                documents.add(document);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return documents;
+    }
+
 }
