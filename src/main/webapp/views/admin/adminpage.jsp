@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List, ma.ensi.model.Candidature" %>
+<%@ page import="java.util.List, ma.ensi.model.admincandidature" %>
+<%@ page import="ma.ensi.model.admincandidature" %>
+<%
+    List<admincandidature> admincandidatures = (List<admincandidature>) request.getAttribute("admincandidatures");
+%>
 
 <!doctype html>
 <html lang="en">
@@ -200,7 +204,7 @@
                 <div class="col-md-6 d-flex justify-content-center"> <!-- Centre la colonne -->
                     <div class="card mx-auto text-center" style="width: 100%;"> <!-- Centre la carte -->
                         <div class="card-header">
-                            <h4>Voir les statistiques des candidats et annonces à chaque moment</h4>
+                            <h4>Voir les statistiques des admincandidats et annonces à chaque moment</h4>
                         </div>
                         <div class="card-body">
                             <div id="bar"></div>

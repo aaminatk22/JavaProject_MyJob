@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ page import="ma.ensi.model.AgentUniversitaire" %>
+<%@ page import="ma.ensi.model.adminAgentUniversitaire" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ma.ensi.controller.AgentUniversitaireServlet" %>
+<%@ page import="ma.ensi.controller.adminagentuniversitaireservlet" %>
 
 <!doctype html>
 <html lang="en">
@@ -109,14 +109,15 @@
 				<div class="card-header text-center">
 					<h4>Création Compte Admin</h4>
 				</div>
-
+				<form action="${pageContext.request.contextPath}/AgentUniversitaireServlet" method="post">
+					<input type="hidden" name="action" value="save">
 				<div class="card-body">
 					<div class="row">
 						<!-- Left Section -->
 						<div class="col-md-6">
 							<div class="mb-3">
-								<label>Nom d'utilisateur</label>
-								<input type="text" name="nom_utilisateur" class="form-control" placeholder="Nom d'utilisateur" required>
+								<label>Nom d'adminutilisateur</label>
+								<input type="text" name="nom_utilisateur" class="form-control" placeholder="Nom d'adminutilisateur" required>
 							</div>
 
 							<div class="mb-3">
@@ -131,40 +132,34 @@
 						</div>
 
 						<!-- Right Section -->
+						<!-- Section Droite -->
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label>Nom Université</label>
-								<input type="text" name="prenom" class="form-control" placeholder="Nom Université" required>
+								<!-- Corriger le nom de 'prenom' à 'nom_universite' -->
+								<input type="text" name="nom_universite" class="form-control" placeholder="Nom Université" required>
 							</div>
 
 							<div class="mb-3">
 								<label>Nom Établissement</label>
-								<input type="text" name="nom" class="form-control" placeholder="Nom Établissement" required>
+								<!-- Corriger le nom de 'nom' à 'nom_etab' -->
+								<input type="text" name="nom_etab" class="form-control" placeholder="Nom Établissement" required>
 							</div>
 
 							<div class="mb-3">
-								<%--@declare id="universite"--%><label for="universite">Choisissez une option :</label>
+								<%--@declare id="universite"--%><label for="universite">Type d'établissement :</label>
 								<div>
-									<input type="radio" id="option1" name="universite" value="Facultee" required>
+									<!-- La valeur 'Facultee' devrait correspondre à votre modèle de données -->
+									<input type="radio" id="option1" name="type_etab" value="Facultee" required>
 									<label for="option1">Faculté</label>
 								</div>
 								<div>
-									<input type="radio" id="option2" name="universite" value="EcoleSup" required>
+									<input type="radio" id="option2" name="type_etab" value="EcoleSup" required>
 									<label for="option2">École Sup</label>
 								</div>
 							</div>
 
-							<div class="mb-3">
-								<%--@declare id="secteur"--%><label for="secteur">Secteur :</label>
-								<div>
-									<input type="radio" id="option3" name="secteur" value="Public" required>
-									<label for="option3">Public</label>
-								</div>
-								<div>
-									<input type="radio" id="option4" name="secteur" value="Prive" required>
-									<label for="option4">Privé</label>
-								</div>
-							</div>
+
 						</div>
 					</div>
 				</div>
@@ -172,8 +167,9 @@
 				<!-- Submit Button Centered -->
 				<div class="card-footer text-center">
 					<button type="submit" class="btn btn-primary">Valider</button>
+					<a href="<%= request.getContextPath() %>/AgentUniversitaireServlet?action=save" class="btn btn-secondary">Annuler</a>
 				</div>
-			</div>
+				</form>		</div>
 		</div>
 
 

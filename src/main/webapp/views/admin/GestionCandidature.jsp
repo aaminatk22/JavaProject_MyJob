@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List, ma.ensi.model.Candidature" %>
-
+<%@ page import="java.util.List, ma.ensi.model.admincandidature" %>
+<%@ page import="ma.ensi.model.admincandidature" %>
+<%
+	List<admincandidature> admincandidatures = (List<admincandidature>) request.getAttribute("admincandidatures");
+%>
 
 <!doctype html>
 <html lang="en">
@@ -135,8 +138,8 @@
 									</tr>
 									</thead>
 									<tbody>
-									<% if (candidatures != null) { %>
-									<% for (Candidature c : candidatures) { %>
+									<% if (admincandidatures != null) { %>
+									<% for (admincandidature c : admincandidatures) { %>
 									<tr>
 										<th scope="row"><%= c.getId_candidature() %></th>
 										<td><%= c.getNom_utilisateur() %></td>
@@ -157,7 +160,7 @@
 											</form>
 										</td>
 										<td>
-											<form action="CandidatureServlet" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette candidature ?');">
+											<form action="CandidatureServlet" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette admincandidature ?');">
 												<input type="hidden" name="action" value="delete">
 												<input type="hidden" name="id" value="<%= c.getId_candidature() %>">
 												<button type="submit" class="btn btn-danger">Supprimer</button>
@@ -167,7 +170,7 @@
 									<% } %>
 									<% } else { %>
 									<tr>
-										<td colspan="8" class="text-center">Aucune candidature trouvée.</td>
+										<td colspan="8" class="text-center">Aucune admincandidature trouvée.</td>
 									</tr>
 									<% } %>
 									</tbody>

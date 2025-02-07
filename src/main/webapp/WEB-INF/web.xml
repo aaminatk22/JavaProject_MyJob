@@ -17,7 +17,7 @@
     <!-- Servlet Configuration -->
     <servlet>
         <servlet-name>AgentUniversitaireServlet</servlet-name>
-        <servlet-class>ma.ensi.controller.AgentUniversitaireServlet</servlet-class>
+        <servlet-class>ma.ensi.controller.adminagentuniversitaireservlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

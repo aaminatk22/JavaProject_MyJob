@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ page import="java.util.List, ma.ensi.model.Recruteur" %>
+<%@ page import="java.util.List, ma.ensi.model.adminrecruteur" %>
+<%@ page import="ma.ensi.model.adminrecruteur" %>
 <%
-	List<Recruteur> recruteurs = (List<Recruteur>) request.getAttribute("recruteurs");
+	List<adminrecruteur> adminrecruteurs = (List<adminrecruteur>) request.getAttribute("adminrecruteurs");
 %>
 
 
@@ -136,8 +137,8 @@
 								</tr>
 								</thead>
 								<tbody>
-								<% if (recruteurs != null) { %>
-								<% for (Recruteur r : recruteurs) { %>
+								<% if (adminrecruteurs != null) { %>
+								<% for (adminrecruteur r : adminrecruteurs) { %>
 								<tr>
 									<td><%= r.getEntreprise() %></td>
 									<td><%= r.getNom() %></td>
@@ -147,7 +148,7 @@
 								<% } %>
 								<% } else { %>
 								<tr>
-									<td colspan="4">Aucun recruteur trouvé.</td>
+									<td colspan="4">Aucun adminrecruteur trouvé.</td>
 								</tr>
 								<% } %>
 								</tbody>

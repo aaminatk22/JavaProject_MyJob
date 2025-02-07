@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List, ma.ensi.model.Recruteur" %>
+<%@ page import="java.util.List, ma.ensi.model.adminrecruteur" %>
+<%@ page import="ma.ensi.model.adminrecruteur" %>
 <%
-	List<Recruteur> recruteurs = (List<Recruteur>) request.getAttribute("recruteurs");
+	List<adminrecruteur> adminrecruteurs = (List<adminrecruteur>) request.getAttribute("adminrecruteurs");
 %>
 
 
@@ -137,23 +138,23 @@
 									</tr>
 									</thead>
 									<tbody>
-									<% if (recruteurs != null) { %>
-									<% for (Recruteur recruteur : recruteurs) { %>
+									<% if (adminrecruteurs != null) { %>
+									<% for (adminrecruteur adminrecruteur : adminrecruteurs) { %>
 									<tr>
-										<th scope="row"><%= recruteur.getId_utilisateur() %></th>
-										<td><%= recruteur.getNom() %></td>
-										<td><%= recruteur.getEntreprise() %></td>
+										<th scope="row"><%= adminrecruteur.getId_utilisateur() %></th>
+										<td><%= adminrecruteur.getNom() %></td>
+										<td><%= adminrecruteur.getEntreprise() %></td>
 										<td>
 											<form action="RecruteurServlet" method="post">
 												<input type="hidden" name="action" value="edit">
-												<input type="hidden" name="id" value="<%= recruteur.getId_utilisateur() %>">
+												<input type="hidden" name="id" value="<%= adminrecruteur.getId_utilisateur() %>">
 												<button type="submit" class="btn btn-primary">Modifier</button>
 											</form>
 										</td>
 										<td>
-											<form action="RecruteurServlet" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce recruteur ?');">
+											<form action="RecruteurServlet" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce adminrecruteur ?');">
 												<input type="hidden" name="action" value="delete">
-												<input type="hidden" name="id" value="<%= recruteur.getId_utilisateur() %>">
+												<input type="hidden" name="id" value="<%= adminrecruteur.getId_utilisateur() %>">
 												<button type="submit" class="btn btn-danger">Supprimer</button>
 											</form>
 										</td>
@@ -161,7 +162,7 @@
 									<% } %>
 									<% } else { %>
 									<tr>
-										<td colspan="5" class="text-center">Aucun recruteur trouvé.</td>
+										<td colspan="5" class="text-center">Aucun adminrecruteur trouvé.</td>
 									</tr>
 									<% } %>
 									</tbody>

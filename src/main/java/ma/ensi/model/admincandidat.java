@@ -1,21 +1,21 @@
 package ma.ensi.model;
 
-public class Candidat extends Utilisateur {
+public class admincandidat extends adminutilisateur {
     private static final int id_utilisateur = 0;
     private int age; // Candidate's age
     private String nom_universite; // Candidate's university name (updated to match database)
     private String niveau_etude; // Candidate's education level (updated to match database)
 
     // Default Constructor
-    public Candidat() {
+    public admincandidat() {
         super(); // Appelle le constructeur par défaut de Utilisateur
        
     }
 
     // Parameterized Constructor
-    public Candidat(int id_utilisateur, String nom_utilisateur, String email, String mot_de_passe, String role,
-                    String nom, String prenom, String tel, int age, String nom_universite, String niveau_etude) {
-        super(); // Call the parent class constructor
+    public admincandidat(int id_utilisateur, String nom_utilisateur, String email, String mot_de_passe, String role,
+                         String nom, String prenom, String tel, int age, String nom_universite, String niveau_etude) {
+        super(nom_utilisateur, email, mot_de_passe, "candidat", nom, prenom); // Call the parent class constructor
         this.setId_utilisateur(id_utilisateur);
         this.setNom_utilisateur(nom_utilisateur);
         this.setEmail(email);

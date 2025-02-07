@@ -1,16 +1,15 @@
 package ma.ensi.service;
 
-import ma.ensi.dao.RecruteurDAO;
-import ma.ensi.model.Recruteur;
+import ma.ensi.dao.adminrecruteurdao;
+import ma.ensi.model.adminrecruteur;
 
-import java.sql.SQLException;
 import java.util.List;
 
-public class RecruteurService {
-    private final RecruteurDAO recruteurDAO = new RecruteurDAO();
+public class adminrecruteurservice {
+    private final adminrecruteurdao recruteurDAO = new adminrecruteurdao();
 
     // Retrieve all recruiters
-    public List<Recruteur> getAllRecruteurs() {
+    public List<adminrecruteur> getAllRecruteurs() {
         try {
             return recruteurDAO.getAllRecruteurs();
         } catch (Exception e) {
@@ -23,7 +22,7 @@ public class RecruteurService {
 
 
     // Retrieve a recruiter by ID
-    public Recruteur getRecruteurById(int id) {
+    public adminrecruteur getRecruteurById(int id) {
         try {
             return recruteurDAO.getRecruteurById(id);
         } catch (Exception e) {
@@ -34,9 +33,9 @@ public class RecruteurService {
     }
 
     // Add a new recruiter
-    public boolean addRecruteur(Recruteur recruteur) {
+    public boolean addRecruteur(adminrecruteur adminrecruteur) {
         try {
-            return recruteurDAO.addRecruteur(recruteur);
+            return recruteurDAO.addRecruteur(adminrecruteur);
         } catch (Exception e) {
             System.out.println("Error adding recruiter: " + e.getMessage());
             e.printStackTrace();
@@ -45,9 +44,9 @@ public class RecruteurService {
     }
 
     // Update an existing recruiter
-    public boolean updateRecruteur(Recruteur recruteur) {
+    public boolean updateRecruteur(adminrecruteur adminrecruteur) {
         try {
-            return recruteurDAO.updateRecruteur(recruteur);
+            return recruteurDAO.updateRecruteur(adminrecruteur);
         } catch (Exception e) {
             System.out.println("Error updating recruiter: " + e.getMessage());
             e.printStackTrace();
@@ -70,7 +69,7 @@ public class RecruteurService {
 
     }
 
-    public void saveRecruteur(Recruteur recruteur) {
+    public void saveRecruteur(adminrecruteur adminrecruteur) {
 
     }
 }

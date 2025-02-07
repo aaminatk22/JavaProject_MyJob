@@ -1,7 +1,9 @@
-<%@ page import="ma.ensi.model.AgentUniversitaire" %>
+<%@ page import="ma.ensi.model.adminAgentUniversitaire" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ page import="ma.ensi.controller.AgentUniversitaireServlet" %>
+<%@ page import="ma.ensi.controller.adminagentuniversitaireservlet" %>
+
+
 
 <!doctype html>
 <html lang="en">
@@ -128,20 +130,22 @@
 										<thead>
 										<tr>
 											<th scope="col">Nom Agent</th>
+											<th scope="col">Nom Universite</th>
 											<th scope="col">Établissement</th>
 											<th scope="col">Modifier</th>
 											<th scope="col">Supprimer</th>
 										</tr>
 					<tbody>
 					<%
-						List<AgentUniversitaire> agents = (List<ma.ensi.model.AgentUniversitaire>) request.getAttribute("agents");
+						List<adminAgentUniversitaire> agents = (List<adminAgentUniversitaire>) request.getAttribute("agents");
 						if (agents != null) {
-							for (ma.ensi.model.AgentUniversitaire agent : agents) {
+							for (adminAgentUniversitaire agent : agents) {
 					%>
 					<tr>
-						<th scope="row"><%= agent.getId_utilisateur() %></th>
-						<td><%= agent.getNom() %> <%= agent.getPrenom() %></td>
-						<td><%= agent.getUniversite() %></td>
+						<th scope="row"><%= agent.getNom_utilisateur() %></th>
+						<th><%= agent.getNom_universite() %></th>
+						<th><%= agent.getNomEtab() %> </th>
+
 						<td>
 							<a href="AgentUniversitaireServlet?action=update&id=<%= agent.getId_utilisateur() %>" class="btn btn-primary">Modifier</a>
 						</td>
@@ -201,7 +205,6 @@
   <!-- Template JS File -->
   <script src="${pageContext.request.contextPath}/js/script.js"></script>
   <script src="${pageContext.request.contextPath}/js/custom.js"></script>
-
-  </body>
-
+					</body>
+</div>
 </html>

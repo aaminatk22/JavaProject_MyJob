@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ page import="ma.ensi.model.AgentUniversitaire" %>
+<%@ page import="ma.ensi.model.adminAgentUniversitaire" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ma.ensi.controller.AgentUniversitaireServlet" %>
+<%@ page import="ma.ensi.controller.adminagentuniversitaireservlet" %>
 
 <!doctype html>
 <html lang="en">

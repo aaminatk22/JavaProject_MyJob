@@ -1,6 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List, ma.ensi.model.Candidat" %>
+<%@ page import="java.util.List, ma.ensi.model.admincandidat" %>
 
 <!doctype html>
 <html lang="en">
@@ -133,31 +133,31 @@
 								</thead>
 								<tbody>
 								<%
-									List<Candidat> candidats = (List<Candidat>) request.getAttribute("candidats");
-									if (candidats != null) {
-										for (Candidat candidat : candidats) {
+									List<admincandidat> admincandidats = (List<admincandidat>) request.getAttribute("admincandidats");
+									if (admincandidats != null) {
+										for (admincandidat admincandidat : admincandidats) {
 								%>
 								<tr>
-									<td><%= candidat.getId_utilisateur() %></td>
-									<td><%= candidat.getNom() %></td>
-									<td><%= candidat.getPrenom() %></td>
-									<td><%= candidat.getNom_universite() %></td>
-									<td><%= candidat.getNiveau_etude() %></td>
+									<td><%= admincandidat.getId_utilisateur() %></td>
+									<td><%= admincandidat.getNom() %></td>
+									<td><%= admincandidat.getPrenom() %></td>
+									<td><%= admincandidat.getNom_universite() %></td>
+									<td><%= admincandidat.getNiveau_etude() %></td>
 									<td>
 										<form action="CandidatServlet" method="post">
 											<input type="hidden" name="action" value="edit">
-											<input type="hidden" name="id" value="<%= candidat.getId_utilisateur() %>">
-											<input type="text" name="nom" value="<%= candidat.getNom() %>">
-											<input type="text" name="prenom" value="<%= candidat.getPrenom() %>">
-											<input type="text" name="universite" value="<%= candidat.getNom_universite() %>">
-											<input type="text" name="etablissement" value="<%= candidat.getNiveau_etude() %>">
+											<input type="hidden" name="id" value="<%= admincandidat.getId_utilisateur() %>">
+											<input type="text" name="nom" value="<%= admincandidat.getNom() %>">
+											<input type="text" name="prenom" value="<%= admincandidat.getPrenom() %>">
+											<input type="text" name="universite" value="<%= admincandidat.getNom_universite() %>">
+											<input type="text" name="etablissement" value="<%= admincandidat.getNiveau_etude() %>">
 											<button type="submit" class="btn btn-warning">Modifier</button>
 										</form>
 									</td>
 									<td>
 										<form action="CandidatServlet" method="post">
 											<input type="hidden" name="action" value="delete">
-											<input type="hidden" name="id" value="<%= candidat.getId_utilisateur() %>">
+											<input type="hidden" name="id" value="<%= admincandidat.getId_utilisateur() %>">
 											<button type="submit" class="btn btn-danger">Supprimer</button>
 										</form>
 									</td>
