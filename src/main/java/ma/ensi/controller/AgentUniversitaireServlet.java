@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class AgentUniversitaireServlet extends HttpServlet {
     private final AgentUniversitaireService agentService = new AgentUniversitaireService();
@@ -43,6 +44,7 @@ public class AgentUniversitaireServlet extends HttpServlet {
                 String universite = request.getParameter("universite"); // Ajouté
                 String motDePasse = request.getParameter("motDePasse");
 
+                String email;
                 AgentUniversitaire agent = new AgentUniversitaire(id, nomUtilisateur, email, motDePasse, nom, prenom, nomUniversite);
                 agent.setNomUtilisateur(nomUtilisateur);
                 agent.setUniversite(universite); // Ajouté
