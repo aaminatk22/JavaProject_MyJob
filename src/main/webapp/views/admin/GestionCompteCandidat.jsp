@@ -116,7 +116,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							<h4>Liste des Admin</h4>
+							<h4>Liste des Candidats</h4>
 						</div>
 						<div class="card-body">
 							<table class="table table-striped">
@@ -127,7 +127,7 @@
 									<th>Prénom</th>
 									<th>Université</th>
 									<th>Etablissement</th>
-									<th>Modifier</th>
+
 									<th>Supprimer</th>
 								</tr>
 								</thead>

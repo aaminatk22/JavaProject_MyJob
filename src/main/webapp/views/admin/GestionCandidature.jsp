@@ -120,7 +120,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							<h4>Liste des Candidats</h4>
+							<h4>Liste des Candidatures</h4>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -133,7 +133,7 @@
 										<th scope="col">Titre du Poste</th>
 										<th scope="col">Date</th>
 										<th scope="col">Statut</th>
-										<th scope="col">Modifier</th>
+
 										<th scope="col">Supprimer</th>
 									</tr>
 									</thead>

@@ -14,15 +14,26 @@
         <welcome-file>/views/admin/adminpage.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Servlet Configuration -->
+    <!-- Servlet Configuration for Agent Universitaire -->
     <servlet>
-        <servlet-name>AgentUniversitaireServlet</servlet-name>
+        <servlet-name>adminagentuniversitaireservlet</servlet-name>
         <servlet-class>ma.ensi.controller.adminagentuniversitaireservlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>AgentUniversitaireServlet</servlet-name>
-        <url-pattern>/AgentUniversitaireServlet</url-pattern>
+        <servlet-name>adminagentuniversitaireservlet</servlet-name>
+        <url-pattern>/agentUniversitaire</url-pattern>  <!-- Changed URL pattern to avoid conflict -->
+    </servlet-mapping>
+
+    <!-- Servlet Configuration for Candidat Controller -->
+    <servlet>
+        <servlet-name>CandidatController</servlet-name>
+        <servlet-class>ma.ensi.controller.CandidatController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CandidatController</servlet-name>
+        <url-pattern>/candidat</url-pattern>  <!-- Keeps this URL pattern for candidat-specific routes -->
     </servlet-mapping>
 
     <!-- Security Constraint to Restrict Access to Admin Pages -->
@@ -34,6 +45,5 @@
     </security-constraint>
 
     <!-- Resources Configuration -->
-
 
 </web-app>

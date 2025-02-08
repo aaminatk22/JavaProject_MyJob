@@ -132,7 +132,7 @@
 								<tr>
 									<th scope="col">Société</th>
 									<th scope="col">Nom Recruteur</th>
-									<th scope="col">Modifier</th>
+
 									<th scope="col">Supprimer</th>
 								</tr>
 								</thead>

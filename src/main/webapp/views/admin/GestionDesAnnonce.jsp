@@ -129,7 +129,6 @@
 										<th scope="col">Id Annonce</th>
 										<th scope="col">Titre</th>
 										<th scope="col">Date</th>
-										<th scope="col">Modifier</th>
 										<th scope="col">Supprimer</th>
 									</tr>
 									</thead>

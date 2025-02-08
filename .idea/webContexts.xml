@@ -4,8 +4,10 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/components/Navbar.jsp" value="file://$PROJECT_DIR$/src/main/webapp/components" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/admin/ListeDesAdminUni.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/candidat/CandidatProfil.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/candidat" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/candidat/CreerProfil.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/candidat" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/login/loginpage.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/login" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/Profile.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/RecruiterDashboard.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/recruteur/RecruiterSpace.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/recruteur" />
