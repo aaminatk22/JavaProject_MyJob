@@ -1,53 +1,77 @@
 package ma.ensi.controller;
 
 import ma.ensi.model.adminrecruteur;
-import ma.ensi.service.adminrecruteurservice;
+import ma.ensi.dao.adminrecruteurdao;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import java.io.IOException;
 import java.util.List;
 
-public class adminrecruteurcontroller {
-    private final adminrecruteurservice recruteurService = new adminrecruteurservice();
+@WebServlet("/adminrecruteurservlet")
+class adminrecruteurcontroller extends HttpServlet {
 
-    // Get all recruiters
-    public List<adminrecruteur> getAllRecruiters() {
-        try {
-            return recruteurService.getAllRecruteurs();
-        } catch (Exception e) { // Catch more general exceptions
-            e.printStackTrace();
-            throw new RuntimeException("Failed to fetch recruiters.");
+    private adminrecruteurdao recruteurDao;
+
+    @Override
+    public void init() throws ServletException {
+        recruteurDao = new adminrecruteurdao();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("edit".equals(action)) {
+            // Retrieve recruiter by ID and display the edit form
+            int id = Integer.parseInt(request.getParameter("id"));
+            adminrecruteur recruteur = recruteurDao.getRecruteurById(id);
+            request.setAttribute("recruteur", recruteur);
+            request.getRequestDispatcher("/editRecruteur.jsp").forward(request, response);
+        } else {
+            // Retrieve all recruiters
+            List<adminrecruteur> recruteurs = recruteurDao.getAllRecruteurs(); // Correct method to fetch all recruiters
+            request.setAttribute("adminrecruteurs", recruteurs);
+            request.getRequestDispatcher("/listRecruteurs.jsp").forward(request, response);
         }
     }
 
-    // Delete a recruiter by ID
-    public void deleteRecruiter(int id_utilisateur) {
-        try {
-            recruteurService.deleteRecruteur(id_utilisateur);
-            System.out.println("Recruiter deleted successfully.");
-        } catch (Exception e) { // Catch more general exceptions
-            e.printStackTrace();
-            throw new RuntimeException("Failed to delete recruiter.");
-        }
-    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
 
-    // Update a recruiter's account
-    public void updateRecruiter(adminrecruteur adminrecruteur) {
-        try {
-            recruteurService.updateRecruteur(adminrecruteur);
-            System.out.println("Recruiter updated successfully.");
-        } catch (Exception e) { // Catch more general exceptions
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update recruiter.");
-        }
-    }
+        if ("edit".equals(action)) {
+            // Edit recruiter
+            int id = Integer.parseInt(request.getParameter("id"));
+            String nom_utilisateur = request.getParameter("nom_utilisateur");
+            String email = request.getParameter("email");
+            String mot_de_passe = request.getParameter("mot_de_passe");
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String entreprise = request.getParameter("entreprise");
+            String poste = request.getParameter("poste");
 
-    // Delete a job posting
-    public void deleteJobPost(int id_annonce) {
-        try {
-            recruteurService.deleteJobPost(id_annonce);
-            System.out.println("Job post deleted successfully.");
-        } catch (Exception e) { // Catch more general exceptions
-            e.printStackTrace();
-            throw new RuntimeException("Failed to delete job post.");
+            adminrecruteur recruteur = new adminrecruteur(id, nom_utilisateur, email, mot_de_passe, "recruteur", nom, prenom, entreprise, poste);
+            boolean isUpdated = recruteurDao.updateRecruteur(recruteur);
+
+            if (isUpdated) {
+                response.sendRedirect("adminrecruteurservlet");
+            } else {
+                request.setAttribute("errorMessage", "Failed to update recruiter.");
+                request.getRequestDispatcher("/editRecruteur.jsp").forward(request, response);
+            }
+        } else if ("delete".equals(action)) {
+            // Delete recruiter
+            int id = Integer.parseInt(request.getParameter("id"));
+            boolean isDeleted = recruteurDao.deleteRecruteur(id);
+
+            if (isDeleted) {
+                response.sendRedirect("adminrecruteurservlet");
+            } else {
+                request.setAttribute("errorMessage", "Failed to delete recruiter.");
+                request.getRequestDispatcher("/listRecruteurs.jsp").forward(request, response);
+            }
         }
     }
 }

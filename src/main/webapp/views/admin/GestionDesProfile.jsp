@@ -123,14 +123,14 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							<h4>Liste des Admin</h4>
+							<h4>Liste des recruteurs</h4>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-striped">
 									<thead>
 									<tr>
-										<th scope="col">Admin_id</th>
+										<th scope="col">Recruteur ID</th>
 										<th scope="col">Nom</th>
 										<th scope="col">Société</th>
 										<th scope="col">Modifier</th>

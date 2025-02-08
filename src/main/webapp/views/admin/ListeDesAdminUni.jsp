@@ -147,10 +147,10 @@
 						<th><%= agent.getNomEtab() %> </th>
 
 						<td>
-							<a href="AgentUniversitaireServlet?action=update&id=<%= agent.getId_utilisateur() %>" class="btn btn-primary">Modifier</a>
+							<a href="agentuniversitaireservlet?action=update&id=<%= agent.getId_utilisateur() %>" class="btn btn-primary">Modifier</a>
 						</td>
 						<td>
-							<a href="AgentUniversitaireServlet?action=delete&id=<%= agent.getId_utilisateur() %>" class="btn btn-danger">Supprimer</a>
+							<a href="agentuniversitaireservlet?action=delete&id=<%= agent.getId_utilisateur() %>" class="btn btn-danger">Supprimer</a>
 						</td>
 					</tr>
 					<%

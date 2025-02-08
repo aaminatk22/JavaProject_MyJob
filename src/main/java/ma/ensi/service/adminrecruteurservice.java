@@ -32,16 +32,7 @@ public class adminrecruteurservice {
         }
     }
 
-    // Add a new recruiter
-    public boolean addRecruteur(adminrecruteur adminrecruteur) {
-        try {
-            return recruteurDAO.addRecruteur(adminrecruteur);
-        } catch (Exception e) {
-            System.out.println("Error adding recruiter: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
+
 
     // Update an existing recruiter
     public boolean updateRecruteur(adminrecruteur adminrecruteur) {

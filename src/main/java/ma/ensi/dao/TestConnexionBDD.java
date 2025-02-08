@@ -51,25 +51,3 @@ public class TestConnexionBDD {
 }
 
 
-/*
-import ma.ensi.model.Annonce;
-
-import java.util.List;
-
-public class TestAnnonceDAO {
-    public static void main(String[] args) {
-        AnnonceDAO annonceDAO = new AnnonceDAO();
-
-        // Test getAllAnnonces()
-        List<Annonce> annonces = annonceDAO.getAllAnnonces();
-        for (Annonce annonce : annonces) {
-            System.out.println("ID: " + annonce.getIdAnnonce());
-            System.out.println("Titre: " + annonce.getTitre());
-            System.out.println("Type: " + annonce.getTypeAnnonce());
-            System.out.println("Description: " + annonce.getDescription());
-            System.out.println("Date: " + annonce.getDatePublication());
-            System.out.println("User ID: " + annonce.getIdUtilisateur());
-        }
-    }
-}
-*/

@@ -109,7 +109,7 @@
 				<div class="card-header text-center">
 					<h4>Création Compte Admin</h4>
 				</div>
-				<form action="${pageContext.request.contextPath}/AgentUniversitaireServlet" method="post">
+				<form action="${pageContext.request.contextPath}/adminagentuniversitaireservlet" method="post">
 					<input type="hidden" name="action" value="save">
 				<div class="card-body">
 					<div class="row">
@@ -167,7 +167,7 @@
 				<!-- Submit Button Centered -->
 				<div class="card-footer text-center">
 					<button type="submit" class="btn btn-primary">Valider</button>
-					<a href="<%= request.getContextPath() %>/AgentUniversitaireServlet?action=save" class="btn btn-secondary">Annuler</a>
+					<a href="<%= request.getContextPath() %>/adminagentuniversitaireservlet?action=save" class="btn btn-secondary">Annuler</a>
 				</div>
 				</form>		</div>
 		</div>

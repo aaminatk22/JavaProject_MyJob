@@ -145,7 +145,7 @@
 								</c:forEach>
 							</select>
 
-							<!-- Liste déroulante des établissements
+							 Liste déroulante des établissements
 							<h3>Établissements disponibles</h3>
 							<select>
 								<c:forEach var="etablissement" items="${etablissements}">
