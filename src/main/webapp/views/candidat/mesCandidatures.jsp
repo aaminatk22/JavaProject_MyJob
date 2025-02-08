@@ -4,9 +4,6 @@
 <%@ page import="ma.ensi.model.Entretien" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.time.LocalDate" %>
-<%@ page import="java.util.ArrayList" %>
 
 <%
     // Vérification de l'authentification
@@ -20,37 +17,6 @@
     List<Candidature> candidatures = (List<Candidature>) request.getAttribute("candidatures");
     Map<Integer, String> annoncesMap = (Map<Integer, String>) session.getAttribute("annoncesMap");
     Map<Integer, Entretien> entretiensMap = (Map<Integer, Entretien>) request.getAttribute("entretiensMap");
-
-    // Static data for demonstration if no candidatures exist
-    if (candidatures == null || candidatures.isEmpty()) {
-        candidatures = new ArrayList<>();
-
-        // Example Candidature
-        Candidature staticCandidature = new Candidature();
-        staticCandidature.setIdCandidature(1);
-        staticCandidature.setIdAnnonce(101);
-        staticCandidature.setIdUtilisateur(1);
-        staticCandidature.setDateSoumission(LocalDate.now().minusDays(10));
-        staticCandidature.setStatut("En attente");
-        candidatures.add(staticCandidature);
-
-        // Example Entretien
-        if (entretiensMap == null) {
-            entretiensMap = new HashMap<>();
-        }
-        Entretien staticEntretien = new Entretien();
-        staticEntretien.setDateEntretien(LocalDate.now().plusDays(5));
-        staticEntretien.setHeureEntretien(java.time.LocalTime.of(10, 30));
-        staticEntretien.setLieu("Bureau - Casablanca");
-        staticEntretien.setStatut("Planifié");
-        entretiensMap.put(staticCandidature.getIdCandidature(), staticEntretien);
-
-        // Example Annonce Map
-        if (annoncesMap == null) {
-            annoncesMap = new HashMap<>();
-        }
-        annoncesMap.put(staticCandidature.getIdAnnonce(), "Développeur Java");
-    }
 %>
 
 <!DOCTYPE html>
@@ -69,7 +35,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap JS (required for interactive components) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
 <body>
 
@@ -123,7 +88,10 @@
             </tr>
             </thead>
             <tbody>
-            <% for (Candidature candidature : candidatures) { %>
+            <%
+                if (candidatures != null && !candidatures.isEmpty()) {
+                    for (Candidature candidature : candidatures) {
+            %>
             <tr class="border border-gray-300">
                 <td class="p-2 text-black"><%= candidature.getIdCandidature() %></td>
                 <td class="p-2 text-black"><%= annoncesMap.getOrDefault(candidature.getIdAnnonce(), "Annonce Inconnue") %></td>
@@ -142,6 +110,13 @@
                     ❌ <strong>Aucun entretien planifié</strong>
                     <% } %>
                 </td>
+            </tr>
+            <%
+                }
+            } else {
+            %>
+            <tr>
+                <td colspan="5" class="text-center text-gray-500 p-4">Aucune candidature trouvée</td>
             </tr>
             <% } %>
             </tbody>
