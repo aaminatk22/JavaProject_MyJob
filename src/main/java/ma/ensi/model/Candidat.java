@@ -12,7 +12,7 @@ public class Candidat extends Utilisateur {
 
     // Parameterized Constructor
     public Candidat(int idUtilisateur, String nomUtilisateur, String email, String motDePasse, String role,
-                    String nom, String prenom, int age, String nomUniversite, String niveauEtude) {
+                    String nom, String prenom, String tel, int age, String nomUniversite, String niveauEtude) {
         super(); // Call the parent class constructor
         this.setIdUtilisateur(idUtilisateur);
         this.setNomUtilisateur(nomUtilisateur);
@@ -21,11 +21,14 @@ public class Candidat extends Utilisateur {
         this.setRole(role);
         this.setNom(nom);
         this.setPrenom(prenom);
+        this.setTel(tel);
 
         this.age = age;
         this.nomUniversite = nomUniversite;
         this.niveauEtude = niveauEtude;
     }
+
+
 
     // Getters and Setters for additional fields
 
@@ -59,5 +62,9 @@ public class Candidat extends Utilisateur {
         System.out.println("Âge: " + this.age);
         System.out.println("Université: " + this.nomUniversite);
         System.out.println("Niveau d'étude: " + this.niveauEtude);
+        System.out.println("Téléphone: " + this.getTel());
     }
+
+
+
 }

@@ -14,6 +14,9 @@ $(document).ready(function () {
 	});
 });
 
+document.body.style.overflow = "auto";
+document.documentElement.style.overflow = "auto";
+
 
 // sidebar menu dropdown
 const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');

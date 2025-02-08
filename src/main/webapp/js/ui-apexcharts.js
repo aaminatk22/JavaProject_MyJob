@@ -843,7 +843,7 @@ var lineOptions = {
       },
     },
     series: [71, 63],
-    labels: ['Device 1', 'Device 2'],
+    labels: ['Candidats', 'Annonces'],
     legend: {
       show: true,
       position: 'left',

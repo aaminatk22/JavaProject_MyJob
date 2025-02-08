@@ -1,68 +1,42 @@
 package ma.ensi.controller;
 
-import ma.ensi.model.Recruteur;
+import ma.ensi.model.Annonce;
+import ma.ensi.model.Utilisateur;
+import ma.ensi.service.AnnonceService;
 import ma.ensi.service.RecruteurService;
+import ma.ensi.model.Recruteur;
 
-import java.sql.SQLException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+@WebServlet("/recruteur")
+public class RecruteurController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-public class RecruteurController {
-    private final RecruteurService recruteurService = new RecruteurService();
+    private AnnonceService annonceService = new AnnonceService(); // Assuming you have this service
 
-    // Add a new recruiter
-    public void addRecruteur(String nomUtilisateur, String email, String motDePasse, String nom, String prenom, String entreprise) {
-        Recruteur recruteur = new Recruteur(nomUtilisateur, email, motDePasse, nom, prenom, entreprise);
-        try {
-            recruteurService.saveRecruteur(recruteur);
-            System.out.println("Recruteur ajouté avec succès !");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de l'ajout du recruteur : " + e.getMessage());
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the authenticated user (recruiter)
+        Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+        if (utilisateur == null) {
+            response.sendRedirect(request.getContextPath() + "/views/login/loginpage.jsp");
+            return;
         }
-    }
 
-    // Get recruiter by ID
-    public void getRecruteurById(int id) {
-        try {
-            Recruteur recruteur = recruteurService.getRecruteurById(id);
-            if (recruteur != null) {
-                System.out.println("Recruteur trouvé : " + recruteur);
-            } else {
-                System.out.println("Aucun recruteur trouvé avec l'ID : " + id);
-            }
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération du recruteur : " + e.getMessage());
-        }
-    }
+        // Fetch the recruiter's announcements by their ID
+        List<Annonce> annonces = annonceService.getAnnoncesByRecruiter(utilisateur.getIdUtilisateur());
 
-    // Get all recruiters
-    public void getAllRecruteurs() {
-        try {
-            List<Recruteur> recruteurs = recruteurService.getAllRecruteurs();
-            System.out.println("Liste des recruteurs : ");
-            recruteurs.forEach(System.out::println);
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération des recruteurs : " + e.getMessage());
-        }
-    }
+        // Set the fetched annonces as a request attribute
+        request.setAttribute("annonces", annonces);
 
-    // Update a recruiter's information
-    public void updateRecruteur(int id, String nomUtilisateur, String email, String motDePasse, String nom, String prenom, String entreprise) {
-        Recruteur recruteur = new Recruteur(id, nomUtilisateur, email, motDePasse, nom, prenom, entreprise);
-        try {
-            recruteurService.updateRecruteur(recruteur);
-            System.out.println("Recruteur mis à jour avec succès !");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la mise à jour du recruteur : " + e.getMessage());
-        }
-    }
-
-    // Delete a recruiter by ID
-    public void deleteRecruteur(int id) {
-        try {
-            recruteurService.deleteRecruteur(id);
-            System.out.println("Recruteur supprimé avec succès !");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la suppression du recruteur : " + e.getMessage());
-        }
+        // Forward the request to the view
+        request.getRequestDispatcher("/views/recruteur/annonces.jsp").forward(request, response);
     }
 }
+

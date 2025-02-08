@@ -1,7 +1,49 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <!-- Application Display Name -->
+    <display-name>Myjob</display-name>
+
+    <!-- Welcome File Configuration -->
+    <welcome-file-list>
+        <!-- Ensure this points to a valid file in the 'webapp' directory -->
+        <welcome-file>/views/admin/adminpage.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Servlet Configuration for Agent Universitaire -->
+    <servlet>
+        <servlet-name>adminagentuniversitaireservlet</servlet-name>
+        <servlet-class>ma.ensi.controller.adminagentuniversitaireservlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>adminagentuniversitaireservlet</servlet-name>
+        <url-pattern>/agentUniversitaire</url-pattern>  <!-- Changed URL pattern to avoid conflict -->
+    </servlet-mapping>
+
+    <!-- Servlet Configuration for Candidat Controller -->
+    <servlet>
+        <servlet-name>CandidatController</servlet-name>
+        <servlet-class>ma.ensi.controller.CandidatController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CandidatController</servlet-name>
+        <url-pattern>/candidat</url-pattern>  <!-- Keeps this URL pattern for candidat-specific routes -->
+    </servlet-mapping>
+
+    <!-- Security Constraint to Restrict Access to Admin Pages -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin Pages</web-resource-name>
+            <url-pattern>/views/admin/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+
+    <!-- Resources Configuration -->
+
 </web-app>
