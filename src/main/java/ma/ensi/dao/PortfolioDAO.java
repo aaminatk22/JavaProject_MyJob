@@ -37,7 +37,7 @@ public class PortfolioDAO {
         }
     }
 
-    public void addExperience(Experience experience) {
+    public void addExperience(Experiences experience) {
         String sql = "INSERT INTO experience (id_portfolio, titre, entreprise, date_debut, date_fin, description) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnexionBDD.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -116,15 +116,15 @@ public class PortfolioDAO {
         return competences;
     }
 
-    private List<Experience> getExperiencesByPortfolioId(int portfolioId) {
-        List<Experience> experiences = new ArrayList<>();
+    private List<Experiences> getExperiencesByPortfolioId(int portfolioId) {
+        List<Experiences> experiences = new ArrayList<>();
         String sql = "SELECT * FROM experience WHERE id_portfolio = ?";
         try (Connection connection = ConnexionBDD.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, portfolioId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Experience experience = new Experience();
+                Experiences experience = new Experiences();
                 experience.setIdPortfolio(portfolioId);
                 experience.setTitre(resultSet.getString("titre"));
                 experience.setEntreprise(resultSet.getString("entreprise"));

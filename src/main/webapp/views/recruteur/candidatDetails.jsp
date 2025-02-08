@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="ma.ensi.model.Candidat" %>
 <%@ page import="ma.ensi.model.Portfolio" %>
-<%@ page import="ma.ensi.model.Competence, ma.ensi.model.Experience, ma.ensi.model.Projet, ma.ensi.model.Document" %>
+<%@ page import="ma.ensi.model.Competence, ma.ensi.model.Experiences, ma.ensi.model.Projet, ma.ensi.model.Document" %>
 <%@ page import="java.util.List" %>
 
 <%
@@ -9,7 +9,7 @@
   Portfolio portfolio = (Portfolio) request.getAttribute("portfolio");
   List<Competence> competences = (List<Competence>) request.getAttribute("competences");
   List<Projet> projets = (List<Projet>) request.getAttribute("projets");
-  List<Experience> experiences = (List<Experience>) request.getAttribute("experiences");
+  List<Experiences> experiences = (List<Experiences>) request.getAttribute("experiences");
   List<Document> documents = (List<Document>) request.getAttribute("documents");
 %>
 
@@ -111,7 +111,7 @@
     <!-- Experiences -->
     <div class="bg-white p-6 rounded-lg shadow mb-6">
       <h2 class="text-2xl font-semibold mb-4">Expériences</h2>
-      <% for (Experience experience : experiences) { %>
+      <% for (Experiences experience : experiences) { %>
       <p><strong><%= experience.getTitre() %></strong> chez <%= experience.getEntreprise() %></p>
       <% } %>
     </div>

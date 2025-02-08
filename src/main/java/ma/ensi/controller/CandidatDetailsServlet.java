@@ -5,7 +5,7 @@ import ma.ensi.model.Candidat;
 import ma.ensi.model.Candidature;
 import ma.ensi.model.Portfolio;
 import ma.ensi.model.Competence;
-import ma.ensi.model.Experience;
+import ma.ensi.model.Experiences;
 import ma.ensi.model.Projet;
 import ma.ensi.model.Document;
 import ma.ensi.service.CandidatService;
@@ -61,7 +61,7 @@ public class CandidatDetailsServlet extends HttpServlet {
 
             // Fetch additional portfolio details
             List<Competence> competences = portfolio != null ? portfolio.getCompetences() : null;
-            List<Experience> experiences = portfolio != null ? portfolio.getExperiences() : null;
+            List<Experiences> experiences = portfolio != null ? portfolio.getExperiences() : null;
             List<Projet> projets = portfolio != null ? portfolio.getProjets() : null;
             List<Document> documents = portfolio != null ? portfolioDAO.getDocumentsByPortfolioId(portfolio.getIdPortfolio()) : null;
 

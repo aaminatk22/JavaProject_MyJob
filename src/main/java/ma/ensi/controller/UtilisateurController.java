@@ -67,6 +67,11 @@ public class UtilisateurController extends HttpServlet {
 
                     response.sendRedirect("views/admin/adminpage.jsp");
                 }
+                else if ("universite".equalsIgnoreCase(utilisateur.getRole())) {
+
+                    response.sendRedirect("views/admin/index.jsp");
+                }
+
                 else {
                     System.out.println("Unknown role detected, redirecting to login page.");
                     response.sendRedirect("views/login/loginpage.jsp?error=UnknownRole");

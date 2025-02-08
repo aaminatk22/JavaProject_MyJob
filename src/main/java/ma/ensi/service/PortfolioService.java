@@ -11,7 +11,7 @@ public class PortfolioService {
     private final DocumentDAO documentDAO = new DocumentDAO();
 
     public void createPortfolio(Portfolio portfolio, List<Competence> competences,
-                                List<Experience> experiences, List<Projet> projets, List<Document> documents) {
+                                List<Experiences> experiences, List<Projet> projets, List<Document> documents) {
         // Création du portfolio
         int portfolioId = portfolioDAO.createPortfolio(portfolio);
 
@@ -22,7 +22,7 @@ public class PortfolioService {
         }
 
         // Sauvegarde des expériences
-        for (Experience experience : experiences) {
+        for (Experiences experience : experiences) {
             experience.setIdPortfolio(portfolioId);
             portfolioDAO.addExperience(experience);
         }

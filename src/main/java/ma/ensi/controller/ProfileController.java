@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,8 +136,8 @@ public class ProfileController extends HttpServlet {
     }
 
     // Helper method to parse experiences
-    private List<Experience> parseExperiences(HttpServletRequest request) {
-        List<Experience> experiences = new ArrayList<>();
+    private List<Experiences> parseExperiences(HttpServletRequest request) {
+        List<Experiences> experiences = new ArrayList<>();
         String[] experienceTitles = request.getParameterValues("experienceTitle");
         String[] experienceCompanies = request.getParameterValues("experienceCompany");
         String[] experienceDescriptions = request.getParameterValues("experienceDescription");
@@ -148,7 +147,7 @@ public class ProfileController extends HttpServlet {
                 if (experienceTitles[i] != null && !experienceTitles[i].trim().isEmpty()
                         && experienceCompanies[i] != null && !experienceCompanies[i].trim().isEmpty()
                         && experienceDescriptions[i] != null && !experienceDescriptions[i].trim().isEmpty()) {
-                    Experience experience = new Experience();
+                    Experiences experience = new Experiences();
                     experience.setTitre(experienceTitles[i].trim());
                     experience.setEntreprise(experienceCompanies[i].trim());
                     experience.setDescription(experienceDescriptions[i].trim());

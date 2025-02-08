@@ -45,7 +45,7 @@ public class ProfileService {
      */
     public Portfolio createProfile(int idUtilisateur, String description,
                                    List<Competence> competences, List<Projet> projets,
-                                   List<Experience> experiences, Document resumeDocument) {
+                                   List<Experiences> experiences, Document resumeDocument) {
         try {
             System.out.println("Creating profile for user ID: " + idUtilisateur);
 
@@ -77,7 +77,7 @@ public class ProfileService {
 
             // Step 4: Save Experiences
             if (experiences != null && !experiences.isEmpty()) {
-                for (Experience experience : experiences) {
+                for (Experiences experience : experiences) {
                     experience.setIdPortfolio(portfolioId); // Associate experience with portfolio
                     experienceDAO.saveExperience(experience);
                 }

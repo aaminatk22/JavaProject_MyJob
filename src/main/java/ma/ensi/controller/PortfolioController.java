@@ -53,7 +53,7 @@ public class PortfolioController extends HttpServlet {
             }
 
             // Récupération des expériences
-            List<Experience> experiences = new ArrayList<>();
+            List<Experiences> experiences = new ArrayList<>();
             String[] experienceTitles = request.getParameterValues("experiences[][title]");
             String[] experienceCompanies = request.getParameterValues("experiences[][company]");
             String[] experienceStartDates = request.getParameterValues("experiences[][startDate]");
@@ -61,7 +61,7 @@ public class PortfolioController extends HttpServlet {
             String[] experienceDescriptions = request.getParameterValues("experiences[][description]");
             if (experienceTitles != null && experienceCompanies != null) {
                 for (int i = 0; i < experienceTitles.length; i++) {
-                    Experience experience = new Experience();
+                    Experiences experience = new Experiences();
                     experience.setTitre(experienceTitles[i]);
                     experience.setEntreprise(experienceCompanies[i]);
                     experience.setDateDebut(java.sql.Date.valueOf(experienceStartDates[i]));

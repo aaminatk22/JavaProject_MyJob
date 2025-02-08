@@ -1,6 +1,6 @@
 package ma.ensi.dao;
 
-import ma.ensi.model.Experience;
+import ma.ensi.model.Experiences;
 
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ExperienceDAO {
 
-    public void saveExperience(Experience experience) throws SQLException {
+    public void saveExperience(Experiences experience) throws SQLException {
         String sql = "INSERT INTO experience (id_portfolio, titre, entreprise, date_debut, date_fin, description) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -26,7 +26,7 @@ public class ExperienceDAO {
         }
     }
 
-    public void addExperience(Experience experience) throws Exception {
+    public void addExperience(Experiences experience) throws Exception {
         String query = "INSERT INTO experience (id_portfolio, titre, entreprise, date_debut, date_fin, description) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnexionBDD.getConnection();

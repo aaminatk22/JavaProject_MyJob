@@ -8,14 +8,14 @@ public class Portfolio {
     private String description; // Description du portfolio
     private List<Competence> competences; // Liste des compétences associées
     private List<Projet> projets; // Liste des projets associés
-    private List<Experience> experiences; // Liste des expériences associées
+    private List<Experiences> experiences; // Liste des expériences associées
     private List<Document> documents; // Liste des documents associés (new field)
 
     // Constructeur par défaut
     public Portfolio() {}
 
     // Constructeur avec paramètres
-    public Portfolio(int idPortfolio, int idUser, String description, List<Competence> competences, List<Projet> projets, List<Experience> experiences, List<Document> documents) {
+    public Portfolio(int idPortfolio, int idUser, String description, List<Competence> competences, List<Projet> projets, List<Experiences> experiences, List<Document> documents) {
         this.idPortfolio = idPortfolio;
         this.idUtilisateur = idUser;
         this.description = description;
@@ -66,11 +66,11 @@ public class Portfolio {
         this.projets = projets;
     }
 
-    public List<Experience> getExperiences() {
+    public List<Experiences> getExperiences() {
         return experiences;
     }
 
-    public void setExperiences(List<Experience> experiences) {
+    public void setExperiences(List<Experiences> experiences) {
         this.experiences = experiences;
     }
 
