@@ -28,6 +28,8 @@ public class Candidat extends Utilisateur {
         this.niveauEtude = niveauEtude;
     }
 
+
+
     // Getters and Setters for additional fields
 
     public int getAge() {
@@ -62,5 +64,7 @@ public class Candidat extends Utilisateur {
         System.out.println("Niveau d'étude: " + this.niveauEtude);
         System.out.println("Téléphone: " + this.getTel());
     }
+
+
 
 }
