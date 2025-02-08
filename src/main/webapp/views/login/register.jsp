@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label for="role"><i class="fa-solid fa-user-tag"></i></label>
                             <select name="role" id="role" required>
-                                <option value="" disabled selected>Choisir un rôle</option>
+                                <option value="" disabled selected> Choisir un rôle</option>
                                 <option value="Candidat">Candidat</option>
                                 <option value="Recruteur">Recruteur</option>
                             </select>

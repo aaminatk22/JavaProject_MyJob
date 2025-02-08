@@ -92,7 +92,7 @@
                 <li class="divider" data-text="STARTER">MYJOB.ma</li>
 
                 <li>
-                    <a href="<%= request.getContextPath() %>/views/recruteur/RecruiterDashboard.jsp">
+                    <a href="<%= request.getContextPath() %>/views/recruteur/RecruiterSpace.jsp">
                         <i class='bx bx-columns icon' ></i>
                         Espace Recruteur
                         <i class='bx bx-chevron-right icon-right' ></i>
