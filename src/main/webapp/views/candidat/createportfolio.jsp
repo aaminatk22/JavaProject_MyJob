@@ -146,12 +146,15 @@
 
             <!-- Verification Request -->
             <div class="bg-blue-50 p-6 rounded-lg shadow">
-                <h3 class="text-2xl font-semibold text-blue-600 mb-4">Verification Request</h3>
+                <form action="<%= request.getContextPath() %>/verificationRequest" method="POST" enctype="multipart/form-data">
+
+
                 <div class="space-y-4">
                     <input type="text" name="university" placeholder="University Name" class="w-full border border-gray-300 rounded-lg p-4 text-gray-700 shadow-sm focus:ring focus:ring-blue-300" required>
                     <input type="text" name="verificationDocumentType" placeholder="Document Type (e.g., CV, Certificate)" class="w-full border border-gray-300 rounded-lg p-4 text-gray-700 shadow-sm focus:ring focus:ring-blue-300" required>
                 </div>
                 <button type="submit" name="submitVerificationRequest" class="mt-4 w-full px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition">Request Verification</button>
+                </form>
             </div>
 
             <!-- Submit Button -->
